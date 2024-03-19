@@ -44,9 +44,9 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.coll {
+.row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .google-colors h1 {
