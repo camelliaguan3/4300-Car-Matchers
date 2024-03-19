@@ -106,14 +106,14 @@
     flex-direction: row;
 }
 
-.slidecontainer {
-    width: 100%;
-}
-
 .slider:hover {
     opacity: 1;
 }
 
 .rightt {
     padding-right: 1em;
+}
+
+.upp {
+    padding-top: 4em;
 }
