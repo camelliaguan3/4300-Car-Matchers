@@ -5,13 +5,14 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    max-width: 1200px;
-    min-width: 1000px;
+    /* max-width: 1200px;
+    min-width: 1000px; */
     height: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     flex-direction: column;
+    background-color: white;
 }
 
 body {
