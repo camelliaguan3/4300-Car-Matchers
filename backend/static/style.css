@@ -1,75 +1,81 @@
-.full-body-container{
+.full-body-container {
     position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    width:100%;
-    height:100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     flex-direction: column;
 }
 
-#google-c{
-    color:#4285F4;
+#google-c {
+    color: #4285F4;
 }
 
-#google-s{
-    color:#DB4437;
+#google-s {
+    color: #DB4437;
 }
 
-#google-4{
-    color:	#F4B400;
+#google-4 {
+    color: #F4B400;
 }
 
-#google-3{
-    color:	#4285F4;
+#google-3 {
+    color: #4285F4;
 }
 
-#google-0-1{
-    color:	#0F9D58;
+#google-0-1 {
+    color: #0F9D58;
 }
 
-#google-0-2{
-    color:#DB4437;
+#google-0-2 {
+    color: #DB4437;
 }
 
-.google-colors{
+.google-colors {
     display: flex;
+    flex-direction: row;
     align-items: center;
     font-size: 48px;
     font-family: 'Open Sans', sans-serif;
 }
 
-.google-colors h1{
+.coll {
+    display: flex;
+    flex-direction: column;
+}
+
+.google-colors h1 {
     margin-bottom: 0;
     margin-right: 3px;
 }
 
-.input-box{
+.input-box {
     border-radius: 50px;
-    border:1px solid black;
+    border: 1px solid black;
     display: flex;
     align-items: center;
     margin-top: 10px;
-    padding:12px;
+    padding: 12px;
     width: 600px;
 }
 
-.input-box img{
+.input-box img {
     height: 20px;
-    width:20px;
+    width: 20px;
 }
 
-.top-text{
+.top-text {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.input-box input{
+.input-box input {
     width: 100%;
     margin-left: 10px;
     font-size: 16px;
@@ -77,15 +83,15 @@
     outline: 0;
 }
 
-#answer-box{
+#answer-box {
     width: 700px;
-    margin-top:50px; 
+    margin-top: 50px;
 }
 
-.episode-title{
+.episode-title {
     font-family: 'Kanit', sans-serif;
 }
 
-.episode-desc{
+.episode-desc {
     font-family: 'Montserrat', sans-serif;
 }
