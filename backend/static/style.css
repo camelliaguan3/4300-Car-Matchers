@@ -101,6 +101,11 @@
     font-size: 16px;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 /* slider stuffs */
 .range_container {
     display: flex;
