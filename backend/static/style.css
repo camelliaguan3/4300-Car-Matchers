@@ -106,9 +106,9 @@
     flex-direction: row;
 }
 
-/* .slidecontainer {
+.slidecontainer {
     width: 100%;
-} */
+}
 
 .slider:hover {
     opacity: 1;
