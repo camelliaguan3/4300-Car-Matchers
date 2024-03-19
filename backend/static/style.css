@@ -38,7 +38,7 @@
 
 .google-colors {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     font-size: 48px;
     font-family: 'Open Sans', sans-serif;
