@@ -14,12 +14,21 @@
                 <p class="cboxx upp">What's your budget?</p>
                 <div class="row">
                     <div class="rightt">
-                        <input type="range" min="1" max="1000" value="50" class="slider" id="minRange">
-                        <p class="cbox">Minimum: <span id="min"></span></p>
+                        <!-- <input type="range" min="1" max="1000" value="50" class="slider" id="minRange">
+                        <p class="cbox">Minimum: <span id="min"></span></p> -->
+                        <!-- <input id="minn" type="range" min="0" max="1000" step="1" />
+                        <p>Minimum: <output id="minval"></output></p> -->
+                        <div class="slider">
+                            <input type="range" min="0" max="200" value="100"
+                                oninput="rangeValue.innerText = this.value">
+                            <p id="rangeValue">100</p>
+                        </div>
                     </div>
                     <div class="rightt">
-                        <input type="range" min="1" max="1000" value="50" class="slider" id="maxRange">
-                        <p class="cbox">Maximum: <span id="max"></span></p>
+                        <!-- <input type="range" min="1" max="1000" value="50" class="slider" id="maxRange">
+                        <p class="cbox">Maximum: <span id="max"></span></p> -->
+                        <input id="maxx" type="range" min="0" max="3.14" step="any" />
+                        <p>Value: <output id="maxval"></output></p>
                     </div>
                     <div>
                         <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
