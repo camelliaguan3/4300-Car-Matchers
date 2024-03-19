@@ -45,10 +45,6 @@
     padding-bottom: 2em;
 }
 
-/* .rightspace {
-    margin-right: 5em;
-} */
-
 .row {
     display: flex;
     flex-direction: row;
