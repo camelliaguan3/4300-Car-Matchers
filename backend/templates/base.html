@@ -15,26 +15,29 @@
                 <h1 id="google-0-1">0</h1>
                 <h1 id="google-0-2">0</h1> -->
                 <h1 id="google-0-2">🚗 Car Match</h1>
-                <div class="range_container">
-                    <div class="sliders_control col">
-                        <input id="fromSlider" type="range" value="10" min="0" max="100" />
-                        <input id="toSlider" type="range" value="40" min="0" max="100" />
-                        <div class="cbox">
-                            <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
-                            <label for="no-limit"> no limit</label><br>
+                <div class="col">
+                    <div class="range_container">
+                        <div class="sliders_control col">
+                            <input id="fromSlider" type="range" value="10" min="0" max="100" />
+                            <input id="toSlider" type="range" value="40" min="0" max="100" />
                         </div>
+                        <div class="form_control">
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">Min</div>
+                                <input class="form_control_container__time__input" type="number" id="fromInput"
+                                    value="10" min="0" max="100" />
+                            </div>
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">Max</div>
+                                <input class="form_control_container__time__input" type="number" id="toInput" value="40"
+                                    min="0" max="100" />
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="form_control">
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Min</div>
-                            <input class="form_control_container__time__input" type="number" id="fromInput" value="10"
-                                min="0" max="100" />
-                        </div>
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Max</div>
-                            <input class="form_control_container__time__input" type="number" id="toInput" value="40"
-                                min="0" max="100" />
-                        </div>
+                    <div class="cbox">
+                        <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
+                        <label for="no-limit"> no limit</label><br>
                     </div>
                 </div>
                 <div class="input-box" onclick="sendFocus()">
