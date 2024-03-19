@@ -9,11 +9,12 @@
     min-width: 1000px;
     height: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center;
+    /* justify-content: start;
+    align-items: center; */
     flex-direction: column;
     background-color: white;
     margin: 0 auto;
+    padding: 0;
 }
 
 body {
