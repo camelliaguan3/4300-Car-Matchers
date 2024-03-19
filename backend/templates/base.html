@@ -3,53 +3,56 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
+    rel="stylesheet">
+
 <body>
     <div class="full-body-container">
         <div class="top-text">
             <div class="google-colors">
-                <h1 id="google-4">4</h1>
+                <!-- <h1 id="google-4">4</h1>
                 <h1 id="google-3">3</h1>
                 <h1 id="google-0-1">0</h1>
-                <h1 id="google-0-2">0</h1>
+                <h1 id="google-0-2">0</h1> -->
+                <h1 id="google-0-2">Car Matchers</h1>
+                <div class="input-box" onclick="sendFocus()">
+                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
+                    <input placeholder="Enter the characteristics you want for your dream car" id="filter-text-val"
+                        onkeyup="filterText()">
+                </div>
             </div>
-            <div class="input-box" onclick="sendFocus()">
-                <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterText()">
+            <div id="answer-box">
+
             </div>
         </div>
-        <div id="answer-box">
 
-        </div>
-    </div>
+        <script>
 
-    <script>
-
-        function answerBoxTemplate(title,titleDesc,rating){
-            return `<div class=''>
+            function answerBoxTemplate(title, titleDesc, rating) {
+                return `<div class=''>
                 <h3 class='episode-title'>${title}</h3>
                 <p class='episode-desc'>${titleDesc}</p>
                 <p class='episode-rating'>IMDB Rating: ${rating}</p>
             </div>`
-        }
+            }
 
-        function sendFocus(){
-            document.getElementById('filter-text-val').focus()
-        }
+            function sendFocus() {
+                document.getElementById('filter-text-val').focus()
+            }
 
-        function filterText(){
-            document.getElementById("answer-box").innerHTML = ""
-            console.log(document.getElementById("filter-text-val").value)
-            fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
-            .then((response) => response.json())
-            .then((data) => data.forEach(row => {
-                
-                let tempDiv = document.createElement("div")
-                tempDiv.innerHTML = answerBoxTemplate(row.title,row.descr,row.imdb_rating)
-                document.getElementById("answer-box").appendChild(tempDiv)
-            }));
+            function filterText() {
+                document.getElementById("answer-box").innerHTML = ""
+                console.log(document.getElementById("filter-text-val").value)
+                fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+                    .then((response) => response.json())
+                    .then((data) => data.forEach(row => {
 
-        }
-            
-    </script>
+                        let tempDiv = document.createElement("div")
+                        tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr, row.imdb_rating)
+                        document.getElementById("answer-box").appendChild(tempDiv)
+                    }));
+
+            }
+
+        </script>
 </body>
