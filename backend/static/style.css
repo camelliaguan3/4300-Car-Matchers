@@ -5,20 +5,12 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    max-width: 1200px;
-    min-width: 1000px;
     height: 100%;
     display: flex;
-    /* justify-content: start;
-    align-items: center; */
+    justify-content: start;
+    align-items: center;
     flex-direction: column;
     background-color: white;
-    margin: 0 auto;
-    padding: 0;
-}
-
-body {
-    background-color: rgb(230, 230, 255);
 }
 
 #google-c {
