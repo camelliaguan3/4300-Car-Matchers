@@ -15,29 +15,17 @@
                 <h1 id="google-0-1">0</h1>
                 <h1 id="google-0-2">0</h1> -->
                 <h1 id="google-0-2">🚗 Car Match</h1>
-                <div class="range_container">
-                    <div class="sliders_control">
-                        <input id="fromSlider" type="range" value="10" min="0" max="100" />
-                        <input id="toSlider" type="range" value="40" min="0" max="100" />
+                <div class="col">
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="minRange">
+                        <p>Minimum: <span id="min"></span></p>
                     </div>
-                    <div class="form_control">
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Min</div>
-                            <input class="form_control_container__time__input" type="number" id="fromInput" value="10"
-                                min="0" max="100" />
-                        </div>
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Max</div>
-                            <input class="form_control_container__time__input" type="number" id="toInput" value="40"
-                                min="0" max="100" />
-                        </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="maxRange">
+                        <p>Maximum: <span id="max"></span></p>
                     </div>
-                    <!-- <div class="cbox">
-                        <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
-                        <label for="no-limit"> no limit</label><br>
-                    </div> -->
-
                 </div>
+
                 <div class="input-box" onclick="sendFocus()">
                     <img src="{{ url_for('static', filename='images/mag.png') }}" />
                     <input placeholder="Enter the characteristics you want for your dream car" id="filter-text-val"
