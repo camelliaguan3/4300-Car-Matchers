@@ -42,12 +42,12 @@
     align-items: center;
     font-size: 48px;
     font-family: 'Open Sans', sans-serif;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
 }
 
-.row {
+.col {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .google-colors h1 {
