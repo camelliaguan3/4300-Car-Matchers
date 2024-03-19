@@ -123,14 +123,13 @@
 }
 
 .search {
-    padding-top: 3em;
     font-size: 17px;
-    background-color: #e5f9ff;
+    /* background-color: #e5f9ff; */
     padding: 6px 12px;
-    border-color: rgb(183, 235, 255);
+    /* border-color: rgb(183, 235, 255); */
 }
 
 .search:hover {
-    background-color: rgb(193, 236, 253);
+    background-color: rgb(220, 220, 220);
     cursor: pointer;
 }
