@@ -113,3 +113,7 @@
 .slider:hover {
     opacity: 1;
 }
+
+.rightt {
+    padding-right: 1em;
+}
