@@ -112,6 +112,7 @@
 
 .slider:hover {
     opacity: 1;
+    cursor: pointer;
 }
 
 .rightt {
@@ -119,7 +120,7 @@
 }
 
 .upp {
-    padding-top: 4em;
+    padding-top: 1.5em;
 }
 
 .search {
