@@ -122,14 +122,15 @@
     padding-top: 4em;
 }
 
-.button {
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+.search {
+    padding-top: 3em;
+    font-size: 17px;
+    background-color: #e5f9ff;
+    padding: 6px 12px;
+    border-color: rgb(183, 235, 255);
+}
+
+.search:hover {
+    background-color: rgb(193, 236, 253);
     cursor: pointer;
 }
