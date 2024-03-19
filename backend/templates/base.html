@@ -32,10 +32,10 @@
                                 min="0" max="100" />
                         </div>
                     </div>
-                    <div class="cbox">
+                    <!-- <div class="cbox">
                         <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
                         <label for="no-limit"> no limit</label><br>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="input-box" onclick="sendFocus()">
@@ -45,12 +45,9 @@
                 </div>
             </div>
             <div id="answer-box">
-
             </div>
         </div>
-
         <script>
-
             function answerBoxTemplate(title, titleDesc, rating) {
                 return `<div class=''>
                 <h3 class='episode-title'>${title}</h3>
@@ -58,11 +55,9 @@
                 <p class='episode-rating'>IMDB Rating: ${rating}</p>
             </div>`
             }
-
             function sendFocus() {
                 document.getElementById('filter-text-val').focus()
             }
-
             function filterText() {
                 document.getElementById("answer-box").innerHTML = ""
                 console.log(document.getElementById("filter-text-val").value)
@@ -74,9 +69,7 @@
                         tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr, row.imdb_rating)
                         document.getElementById("answer-box").appendChild(tempDiv)
                     }));
-
             }
-
         </script>
         <script src="backend/scripts/jquery-3.6.1.js"></script>
         <script src="backend/scripts/slider.js"></script>
