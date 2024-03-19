@@ -42,12 +42,12 @@
     align-items: center;
     font-size: 48px;
     font-family: 'Open Sans', sans-serif;
-    padding-bottom: 10em;
+    padding-bottom: 5em;
 }
 
-.rightspace {
+/* .rightspace {
     margin-right: 5em;
-}
+} */
 
 .row {
     display: flex;
