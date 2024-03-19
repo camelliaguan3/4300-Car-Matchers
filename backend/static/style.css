@@ -12,6 +12,22 @@
     flex-direction: column;
 }
 
+html {
+    background-color: rgb(230, 230, 255);
+}
+
+body {
+    background-color: #ddf0ff;
+    font-family: sans-serif;
+    color: rgb(23, 5, 92);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+}
+
 #google-c {
     color: #4285F4;
 }
@@ -42,6 +58,10 @@
     align-items: center;
     font-size: 48px;
     font-family: 'Open Sans', sans-serif;
+}
+
+.rightspace {
+    margin-right: 20px;
 }
 
 .row {
