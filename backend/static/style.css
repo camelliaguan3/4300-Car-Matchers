@@ -101,6 +101,10 @@
     font-size: 16px;
 }
 
+.cboxx {
+    font-size: 19px;
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -116,4 +120,16 @@
 
 .upp {
     padding-top: 4em;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
