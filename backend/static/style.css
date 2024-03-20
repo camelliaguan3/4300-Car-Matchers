@@ -52,7 +52,6 @@ body {
     width: 100%;
 }
 
-
 #question-budget {
     font-size: 18px;
     text-align: center;
@@ -75,7 +74,7 @@ body {
 
 input[type='range']{
     accent-color: var(--theme-color-main); 
-    width: 200px;
+    width: 190px;
     height: 2px;
     background: black;
     border: none;
@@ -166,14 +165,24 @@ input[type='range']:active {
 
 
 #answer-box {
-    width: 45%;
+    width: 650px;
     margin-top: 50px;
+}
+
+.result {
+    padding: 12px;
+}
+
+.hr-result {
+    margin-top: 12px;
 }
 
 .car-make-model {
     font-family: 'Kanit', sans-serif;
+    padding-bottom: 12px;
 }
 
 .car-spec {
     font-family: 'Montserrat', sans-serif;
+    padding-bottom: 6px;
 }
