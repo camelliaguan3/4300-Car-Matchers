@@ -81,7 +81,6 @@ input[type='range']{
     outline: none;
 }
 
-
 input[type='range']:hover {
     opacity: 1;
     cursor: pointer;
@@ -173,7 +172,7 @@ input[type='range']:active {
     padding: 12px;
 }
 
-.hr-result {
+.result-hr {
     margin-top: 12px;
 }
 

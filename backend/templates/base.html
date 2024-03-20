@@ -62,8 +62,8 @@
 
 
         <script>
-            function answerBoxTemplate(make, model, specs, picture) {
-                final = `<h3 class='car-make-model'>${make} ${model}</h3>
+            function answerBoxTemplate(make, model, year, specs, reviews, picture) {
+                final = `<h3 class='car-make-model'>${year} ${make} ${model}</h3>
                 `
 
                 for (let spec in specs) {
@@ -76,8 +76,8 @@
                     final += `<p class='car-spec'>${spec_edit}: ${spec_val}</p>
                     `
                 }
-
-                final += `<hr class="hr-result">`
+                final += `<img class="result-img" src="${picture}" />
+                <hr class="result-hr">`
 
                 return final
             }
@@ -95,12 +95,12 @@
                 // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
                 let tempDiv = document.createElement("div")
                 tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate('Toyota', 'Prius', {'color': 'red', 'price': '$50000'})
+                tempDiv.innerHTML = answerBoxTemplate('Toyota', 'Prius', 2021, {'color': 'red', 'price': '$50000'})
                 document.getElementById("answer-box").appendChild(tempDiv)
 
                 tempDiv = document.createElement("div")
                 tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate('Mercedes', 'GLA', {'color': 'black', 'price': '$70000'})
+                tempDiv.innerHTML = answerBoxTemplate('Mercedes', 'GLA', 2023, {'color': 'black', 'price': '$70000'})
                 document.getElementById("answer-box").appendChild(tempDiv)
 
 
