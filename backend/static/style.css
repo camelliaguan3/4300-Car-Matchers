@@ -173,8 +173,34 @@ input[type='range']:active {
     padding: 12px;
 }
 
+.result-flex {
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+}
+
+.result-text {
+    flex-basis: 70%;
+}
+
+.result-square {
+    position: relative;
+    width: 200px;     
+    height: 200px;
+
+    flex-basis: 30%;
+}
+
+.result-img {
+    width: 100%;
+}
+
 .result-hr {
     margin-top: 12px;
+
 }
 
 .car-make-model {

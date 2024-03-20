@@ -63,8 +63,10 @@
 
         <script>
             function answerBoxTemplate(make, model, year, specs, reviews, picture) {
-                final = `<h3 class='car-make-model'>${year} ${make} ${model}</h3>
+                h3 = `<h3 class='car-make-model'>${year} ${make} ${model}</h3>
                 `
+
+                specs_html = ``
 
                 for (let spec in specs) {
                     spec_val = specs[spec]
@@ -73,11 +75,22 @@
                     // capitalize spec name
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
 
-                    final += `<p class='car-spec'>${spec_edit}: ${spec_val}</p>
+                    specs_html += `<p class='car-spec'>${spec_edit}: ${spec_val}</p>
                     `
                 }
-                final += `<img class="result-img" src="${picture}" />
-                <hr class="result-hr">`
+                
+
+                final = `<div class="result-flex">
+                            <div class="result-box result-text"> 
+                                ` + h3 + specs_html + `
+                                <p class='reviews'>Review: ${reviews}</p>
+                            </div>
+                            <div class="result-box result-square">
+                                <img class="result-img" src="${picture}" />
+                            </div>
+                        </div>
+                        <hr class="result-hr">
+                        `
 
                 return final
             }
@@ -89,19 +102,20 @@
                 console.log(document.getElementById("filter-text-val-no").value)
                 console.log(document.getElementById("rangeValueMin").textContent)
                 console.log(document.getElementById("rangeValueMax").textContent)
-                console.log(document.getElementById("no-limit").value)
+                // console.log(document.getElementById("no-limit").textContent)
 
 
                 // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
                 let tempDiv = document.createElement("div")
                 tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate('Toyota', 'Prius', 2021, {'color': 'red', 'price': '$50000'})
+                tempDiv.innerHTML = answerBoxTemplate(make='Toyota', model='Prius', year=2021, specs={'color': 'red', 'price': '$50000'}, reviews=[], picture="../static/images/placeholder_prius.png")
                 document.getElementById("answer-box").appendChild(tempDiv)
 
                 tempDiv = document.createElement("div")
                 tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate('Mercedes', 'GLA', 2023, {'color': 'black', 'price': '$70000'})
+                tempDiv.innerHTML = answerBoxTemplate(make='Mercedes', model='GLA', year=2023, specs={'color': 'black', 'price': '$70000'}, reviews=[], picture="../static/images/placeholder_gla.png")
                 document.getElementById("answer-box").appendChild(tempDiv)
+                
 
 
                 /**
