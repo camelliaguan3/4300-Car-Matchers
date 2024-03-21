@@ -40,6 +40,13 @@
                     </div>
                 </div>
 
+                <!--
+                <div class="input-box" onclick="sendFocus()">
+                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
+                    <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterText()">
+                </div>
+                -->
+
                 <div class="input-box-container">
                     <div class="input-box">
                         <img src="{{ url_for('static', filename='images/mag.png') }}" />
@@ -71,7 +78,6 @@
 
                 for (let spec in specs) {
                     spec_val = specs[spec]
-                    console.log(spec + ' is ' + spec_val)
 
                     // capitalize spec name
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
@@ -98,12 +104,34 @@
 
             
             function filterText() {
-                document.getElementById("answer-box").innerHTML = ""
-                console.log(document.getElementById("filter-text-val-yes").value)
-                console.log(document.getElementById("filter-text-val-no").value)
-                console.log(document.getElementById("rangeValueMin").textContent)
-                console.log(document.getElementById("rangeValueMax").textContent)
-                // console.log(document.getElementById("no-limit").textContent)
+                document.getElementById("answer-box").innerHTML = "";
+
+
+                // get input values
+                let filter_yes = document.getElementById("filter-text-val-yes").value;
+                let filter_no = document.getElementById("filter-text-val-no").value;
+                let range_min = document.getElementById("rangeValueMin").textContent;
+                let range_max = document.getElementById("rangeValueMax").textContent;
+                let no_limit = document.getElementById("no-limit").checked;
+          
+
+                // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
+                let url_params = {'yes': filter_yes, 'no': filter_no};
+
+                if (no_limit) {
+                    url_params['no-limit'] = true;
+                }
+                else {
+                    url_params['min'] = range_min;
+                    url_params['max'] = range_max;
+                }
+
+                console.log(filter_yes);
+                console.log(filter_no);
+                console.log(range_min);
+                console.log(range_max);
+                console.log(no_limit);
+                console.log(url_params);
 
 
                 // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
@@ -116,20 +144,38 @@
                 tempDiv.classList.add("result")
                 tempDiv.innerHTML = answerBoxTemplate(make='Mercedes', model='GLA', year=2023, specs={'color': 'black', 'price': '$70000'}, reviews=[], picture="../static/images/placeholder_gla.png")
                 document.getElementById("answer-box").appendChild(tempDiv)
-                
+            
 
-
+                // output the results
                 /**
-                 * fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+                fetch("/cars?" + new URLSearchParams(url_params).toString())
                     .then((response) => response.json())
                     .then((data) => data.forEach(row => {
-
                         let tempDiv = document.createElement("div")
-                        tempDiv.innerHTML = answerBoxTemplate(row.title, row.descr, row.imdb_rating)
+                        tempDiv.classList.add("result")
+                        tempDiv.innerHTML = answerBoxTemplate(make=row.make, model=row.model, year=row.year, specs=row.specs, reviews=row.reviews, picture=row.picture)
                         document.getElementById("answer-box").appendChild(tempDiv)
                     }));
                 **/
             }
+
+
+            /**
+            function filterText(){
+                document.getElementById("answer-box").innerHTML = ""
+                console.log(document.getElementById("filter-text-val").value)
+                fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+                .then((response) => response.json())
+                .then((data) => data.forEach(row => {
+                    
+                    let tempDiv = document.createElement("div")
+                    tempDiv.innerHTML = answerBoxTemplate(row.title,row.descr,row.imdb_rating)
+                    document.getElementById("answer-box").appendChild(tempDiv)
+                }));
+
+            }
+            **/
+
         </script>
     </div>
 </body>
