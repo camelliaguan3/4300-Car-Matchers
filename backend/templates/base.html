@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <title>Car Match</title>
 <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -40,13 +40,6 @@
                     </div>
                 </div>
 
-                <!--
-                <div class="input-box" onclick="sendFocus()">
-                    <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                    <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterText()">
-                </div>
-                -->
-
                 <div class="input-box-container">
                     <div class="input-box">
                         <img src="{{ url_for('static', filename='images/mag.png') }}" />
@@ -62,8 +55,8 @@
                         <button type="submit" class="search-button" onclick="filterText()">Search</button>
                     </div>
                 </div>
-
             </div>
+
             <div id="answer-box">
             </div>
         </div>
@@ -86,7 +79,6 @@
                     `
                 }
                 
-
                 final = `<div class="result-flex">
                             <div class="result-box result-text"> 
                                 ` + h3 + specs_html + `
@@ -106,57 +98,65 @@
             function filterText() {
                 document.getElementById("answer-box").innerHTML = "";
 
-
                 // get input values
                 let filter_yes = document.getElementById("filter-text-val-yes").value;
                 let filter_no = document.getElementById("filter-text-val-no").value;
                 let range_min = document.getElementById("rangeValueMin").textContent;
                 let range_max = document.getElementById("rangeValueMax").textContent;
                 let no_limit = document.getElementById("no-limit").checked;
-          
 
-                // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
-                let url_params = {'yes': filter_yes, 'no': filter_no};
+                if ((parseInt(range_min) > parseInt(range_max)) && !no_limit) {
+                    // if min gresater than max
+                    let tempDiv = document.createElement("div");
+                    tempDiv.classList.add("error");
+                    tempDiv.innerHTML = `<p>Please enter in a valid minimum/maximum price combination.</p>`;
+                    document.getElementById("answer-box").appendChild(tempDiv);
 
-                if (no_limit) {
-                    url_params['no-limit'] = true;
+                } else {
+                    // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
+                    let url_params = {'yes': filter_yes, 'no': filter_no};
+
+                    if (no_limit) {
+                        url_params['no-limit'] = true;
+                    }
+                    else {
+                        url_params['min'] = range_min;
+                        url_params['max'] = range_max;
+                    }
+
+                    console.log(filter_yes);
+                    console.log(filter_no);
+                    console.log(range_min);
+                    console.log(range_max);
+                    console.log(no_limit);
+                    console.log(url_params);
+
+                    // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
+                    let tempDiv = document.createElement("div");
+                    tempDiv.classList.add("result");
+                    tempDiv.innerHTML = answerBoxTemplate(make='Toyota', model='Prius', year=2021, 
+                    specs={'color': 'red', 'price': '$50000'}, reviews=[], picture="../static/images/placeholder_prius.png");
+                    document.getElementById("answer-box").appendChild(tempDiv);
+
+                    tempDiv = document.createElement("div");
+                    tempDiv.classList.add("result");
+                    tempDiv.innerHTML = answerBoxTemplate(make='Mercedes', model='GLA', year=2023, 
+                    specs={'color': 'black', 'price': '$70000'}, reviews=[], picture="../static/images/placeholder_gla.png");
+                    document.getElementById("answer-box").appendChild(tempDiv);
+                
+
+                    // output the results
+                    /**
+                    fetch("/cars?" + new URLSearchParams(url_params).toString())
+                        .then((response) => response.json())
+                        .then((data) => data.forEach(row => {
+                            let tempDiv = document.createElement("div")
+                            tempDiv.classList.add("result")
+                            tempDiv.innerHTML = answerBoxTemplate(make=row.make, model=row.model, year=row.year, specs=row.specs, reviews=row.reviews, picture=row.picture)
+                            document.getElementById("answer-box").appendChild(tempDiv)
+                        }));
+                    **/
                 }
-                else {
-                    url_params['min'] = range_min;
-                    url_params['max'] = range_max;
-                }
-
-                console.log(filter_yes);
-                console.log(filter_no);
-                console.log(range_min);
-                console.log(range_max);
-                console.log(no_limit);
-                console.log(url_params);
-
-
-                // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
-                let tempDiv = document.createElement("div")
-                tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate(make='Toyota', model='Prius', year=2021, specs={'color': 'red', 'price': '$50000'}, reviews=[], picture="../static/images/placeholder_prius.png")
-                document.getElementById("answer-box").appendChild(tempDiv)
-
-                tempDiv = document.createElement("div")
-                tempDiv.classList.add("result")
-                tempDiv.innerHTML = answerBoxTemplate(make='Mercedes', model='GLA', year=2023, specs={'color': 'black', 'price': '$70000'}, reviews=[], picture="../static/images/placeholder_gla.png")
-                document.getElementById("answer-box").appendChild(tempDiv)
-            
-
-                // output the results
-                /**
-                fetch("/cars?" + new URLSearchParams(url_params).toString())
-                    .then((response) => response.json())
-                    .then((data) => data.forEach(row => {
-                        let tempDiv = document.createElement("div")
-                        tempDiv.classList.add("result")
-                        tempDiv.innerHTML = answerBoxTemplate(make=row.make, model=row.model, year=row.year, specs=row.specs, reviews=row.reviews, picture=row.picture)
-                        document.getElementById("answer-box").appendChild(tempDiv)
-                    }));
-                **/
             }
 
 

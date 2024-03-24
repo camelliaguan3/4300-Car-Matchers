@@ -188,6 +188,11 @@ input[type='range']:active {
     margin-bottom: 100px;
 }
 
+.error {
+    color: var(--theme-color-main);
+    text-align: center;
+}
+
 .result {
     padding: 12px;
 }
