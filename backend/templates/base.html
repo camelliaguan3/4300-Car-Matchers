@@ -71,9 +71,11 @@
 
                 if (price == '-1') {
                     price = "N/A";
+                } else {
+                    price = `$${price}`
                 }
 
-                specs_html = `<p class='car-spec'>Price: $${price}</p>
+                specs_html = `<p class='car-spec'>Price: ${price}</p>
                 `
 
                 for (let spec in specs) {
