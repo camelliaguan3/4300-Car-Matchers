@@ -61,7 +61,7 @@ def build_inverted_index(cars):
     inverted = {}
 
     for car in cars:
-        original = [car["make"].lower(), car["model"].lower()]
+        original = car["make"].lower().split() + car["model"].lower().split()
         for term in set(original):
             if term in inverted:
                 inverted[term].append((car['id'], original.count(term)))
