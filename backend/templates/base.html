@@ -12,9 +12,9 @@
         <div class="top-text">
             <h1 id="title">🚗 Car Match</h1>
             <div class="question-container">
-                
-                <p id="question-budget">What's your budget? (in thousands)</p>
-                
+
+                <p id="question-budget">What's your budget?</p>
+
                 <div class="slider-container">
                     <div class="slider">
                         <input type="range" min="0" max="100" value="0"
@@ -43,12 +43,14 @@
                 <div class="input-box-container">
                     <div class="input-box">
                         <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                        <input placeholder="Enter the characteristics you want for your dream car" id="filter-text-val-yes">
+                        <input placeholder="Enter the characteristics you want for your dream car"
+                            id="filter-text-val-yes">
                     </div>
 
                     <div class="input-box">
                         <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                        <input placeholder="Enter the characteristics you DON'T want for your dream car" id="filter-text-val-no">
+                        <input placeholder="Enter the characteristics you DON'T want for your dream car"
+                            id="filter-text-val-no">
                     </div>
 
                     <div class="search-div">
@@ -82,7 +84,7 @@
                 if (picture == '') {
                     picture = '../static/images/no_image.png'
                 }
-                
+
                 final = `<div class="result-flex">
                             <div class="result-box result-text"> 
                                 ` + h3 + specs_html + `
@@ -99,7 +101,7 @@
                 return final
             }
 
-            
+
             function filterText() {
                 document.getElementById("answer-box").innerHTML = "";
 
@@ -119,7 +121,7 @@
 
                 } else {
                     // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
-                    let url_params = {'yes': filter_yes, 'no': filter_no};
+                    let url_params = { 'yes': filter_yes, 'no': filter_no };
 
                     if (no_limit) {
                         url_params['no-limit'] = true;
@@ -128,7 +130,7 @@
                         url_params['min'] = range_min;
                         url_params['max'] = range_max;
                     }
-                    
+
                     /**
                     console.log(filter_yes);
                     console.log(filter_no);
@@ -161,7 +163,7 @@
                         .then((data) => data.forEach(row => {
                             let tempDiv = document.createElement("div");
                             tempDiv.classList.add("result");
-                            tempDiv.innerHTML = answerBoxTemplate(make=row['make'], model=row['model'], year=row['year'], specs={'Price': row['starting price']}, picture=row['image'], url=row['url'], reviews=[]);
+                            tempDiv.innerHTML = answerBoxTemplate(make = row['make'], model = row['model'], year = row['year'], specs = { 'Price': row['starting price'] }, picture = row['image'], url = row['url'], reviews = []);
                             document.getElementById("answer-box").appendChild(tempDiv);
                             num_results += 1;
                         }));
