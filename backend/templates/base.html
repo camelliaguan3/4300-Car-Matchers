@@ -65,11 +65,16 @@
 
 
         <script>
-            function answerBoxTemplate(make, model, year, specs, picture, url, reviews) {
+            function answerBoxTemplate(make, model, year, price, specs, picture, url, reviews) {
                 h3 = `<h3 class='car-make-model'>${year} ${make} ${model}</h3>
                 `
 
-                specs_html = ``
+                if (price == '-1') {
+                    price = "N/A";
+                }
+
+                specs_html = `<p class='car-spec'>Price: $${price}</p>
+                `
 
                 for (let spec in specs) {
                     spec_val = specs[spec]
@@ -112,7 +117,7 @@
                 let range_max = document.getElementById("rangeValueMax").textContent;
                 let no_limit = document.getElementById("no-limit").checked;
 
-                if ((parseInt(range_min) > parseInt(range_max)) && !no_limit) {
+                if ((parseInt(range_min) >= parseInt(range_max)) && !no_limit) {
                     // if min gresater than max
                     let temp_div = document.createElement("div");
                     temp_div.classList.add("error");
@@ -131,30 +136,6 @@
                         url_params['max'] = range_max;
                     }
 
-                    /**
-                    console.log(filter_yes);
-                    console.log(filter_no);
-                    console.log(range_min);
-                    console.log(range_max);
-                    console.log(no_limit);
-                    console.log(url_params);
-                    **/
-
-                    /**
-                    // simple test of answerBoxTemplate (doesn't actually put out a good answer at this time)
-                    let temp_div = document.createElement("div");
-                    temp_div.classList.add("result");
-                    temp_div.innerHTML = answerBoxTemplate(make='Toyota', model='Prius', year=2021, 
-                    specs={'color': 'red', 'price': '$50000'}, reviews=[], picture="../static/images/placeholder_prius.png");
-                    document.getElementById("answer-box").appendChild(temp_div);
-
-                    temp_div = document.createElement("div");
-                    temp_div.classList.add("result");
-                    temp_div.innerHTML = answerBoxTemplate(make='Mercedes', model='GLA', year=2023, 
-                    specs={'color': 'black', 'price': '$70000'}, reviews=[], picture="../static/images/placeholder_gla.png");
-                    document.getElementById("answer-box").appendChild(temp_div);
-                    **/
-
                     let num_results = 0;
 
                     let limit = 50;
@@ -164,13 +145,15 @@
                     temp_div.innerHTML = `<p>(Displaying the first ${limit} cars that match your query.)</p>`;
                     document.getElementById("answer-box").appendChild(temp_div);
 
+                    url_params["num-results"] = limit;
+
                     // output the results
                     let find_results = fetch("/cars?" + new URLSearchParams(url_params).toString())
                         .then((response) => response.json())
                         .then((data) => data.every(row => {
                             let temp_div = document.createElement("div");
                             temp_div.classList.add("result");
-                            temp_div.innerHTML = answerBoxTemplate(make = row['make'], model = row['model'], year = row['year'], specs = { 'Price': row['starting price'] }, picture = row['image'], url = row['url'], reviews = []);
+                            temp_div.innerHTML = answerBoxTemplate(make = row['make'], model = row['model'], year = row['year'], price = row['starting price'], specs = {}, picture = row['image'], url = row['url'], reviews = []);
                             document.getElementById("answer-box").appendChild(temp_div);
 
                             num_results += 1;

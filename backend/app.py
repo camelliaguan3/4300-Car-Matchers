@@ -3,6 +3,8 @@ import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
+import helper
+import numpy as np
 import pandas as pd
 
 # ROOT_PATH for linking with all your files. 
@@ -18,8 +20,8 @@ json_file_path = os.path.join(current_directory, 'init.json')
 # Assuming your JSON data is stored in a file named 'init.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
+    cars_data = data['cars']
     cars_df = pd.DataFrame(data['cars'])
-    # print(cars_df)
     reviews_df = pd.DataFrame(data['reviews'])
 
 app = Flask(__name__)
@@ -39,7 +41,6 @@ def json_search_reviews(query):
 def json_search(q_yes, q_no, min_p, max_p, no_lim):
     matches = []
     
-
     # searching without reviews first
     make = cars_df['make'].str.lower().str.contains(q_yes.lower())
 
@@ -58,6 +59,51 @@ def json_search(q_yes, q_no, min_p, max_p, no_lim):
     matches_filtered_json = matches_filtered.to_json(orient='records')
     return matches_filtered_json
 
+
+
+# cosine similarity attempt
+def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
+
+    if q_yes != '':
+
+        # get inverted index and process the queries to tf-idf vectors
+        no_cars = len(cars_data)
+        inverted_index = helper.build_inverted_index(cars_data)
+        query_yes, query_no = helper.process_query_tf_idf(q_yes, q_no)
+
+        idf = None
+        score_func = helper.accumulate_dot_scores
+        car_norms = helper.compute_car_norms(inverted_index, no_cars, idf=None)
+        results = helper.compute_cos_sim(query_yes, score_func, car_norms, inverted_index, idf)
+        
+        final = []
+
+        for score, id in results[:num_results]:
+            final.append(cars_data[id])    
+
+        results_df = pd.DataFrame(final)
+        
+    else:
+        results_df = cars_df
+    
+    # searching without reviews first
+
+    price = None
+    if not no_lim:
+        price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
+
+    matches = None
+    if price is None:
+        matches = results_df
+    else:
+        matches = results_df[price]
+
+    # print(matches)
+    matches_filtered = matches[['make', 'model', 'year', 'starting price', 'image', 'url']].sort_values(by='starting price', key=lambda col: col, ascending=False)
+    matches_filtered_json = matches_filtered.to_json(orient='records')
+    return matches_filtered_json
+
+
 @app.route("/")
 def home():
     return render_template('base.html',title="")
@@ -69,12 +115,13 @@ def cars_search():
     min_price = request.args.get("min")
     max_price = request.args.get("max")
     no_limit  = request.args.get("no-limit")
-    # print(text_yes)
-    # print(text_no)
-    # print(min_price)
-    # print(max_price)
-    # print(no_limit)
-    return json_search(text_yes, text_no, min_price, max_price, no_limit)
+    num_results  = int(request.args.get("num-results"))
+
+    if not no_limit:
+        min_price = int(min_price)
+        max_price = int(max_price)
+
+    return cos_search(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
 
 if 'DB_NAME' not in os.environ:
