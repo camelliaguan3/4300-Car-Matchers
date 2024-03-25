@@ -98,14 +98,15 @@ def accumulate_dot_scores(query_counts, index, idf=None):
             counts = query_counts[term]
             if counts > 0:
                 q = counts
-                for tup in index[term]:
-                    car_no = tup[0]
-                    tf = tup[1]
+                if term in index:
+                    for tup in index[term]:
+                        car_no = tup[0]
+                        tf = tup[1]
 
-                    if car_no in car_scores:
-                        car_scores[car_no] += q * tf
-                    else:
-                        car_scores[car_no] = q * tf
+                        if car_no in car_scores:
+                            car_scores[car_no] += q * tf
+                        else:
+                            car_scores[car_no] = q * tf
     else:
         for term in query_counts:
             counts = query_counts[term]
@@ -120,6 +121,7 @@ def accumulate_dot_scores(query_counts, index, idf=None):
                     else:
                         car_scores[car_no] = q * tf * idf[term]
 
+    print(car_scores)
     return car_scores
 
 

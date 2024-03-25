@@ -63,13 +63,13 @@ def json_search(q_yes, q_no, min_p, max_p, no_lim):
 
 # cosine similarity attempt
 def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
-
+    valid = True
     if q_yes != '':
 
         # get inverted index and process the queries to tf-idf vectors
         no_cars = len(cars_data)
         inverted_index = helper.build_inverted_index(cars_data)
-        query_yes, query_no = helper.process_query_tf_idf(q_yes, q_no)
+        query_yes, query_no = helper.process_query_tf(q_yes, q_no)
 
         idf = None
         score_func = helper.accumulate_dot_scores
@@ -82,26 +82,32 @@ def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
             final.append(cars_data[id])    
 
         results_df = pd.DataFrame(final)
+
+        if final == []:
+            valid = False
         
     else:
         results_df = cars_df
     
-    # searching without reviews first
+    if valid:
+        price = None
+        if not no_lim:
+            price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
 
-    price = None
-    if not no_lim:
-        price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
+        matches = None
+        if price is None:
+            matches = results_df
+        else:
+            matches = results_df[price]
 
-    matches = None
-    if price is None:
-        matches = results_df
+        # print(matches)
+        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'image', 'url']]
+        #.sort_values(by='starting price', key=lambda col: col, ascending=False)
+        matches_filtered_json = matches_filtered.to_json(orient='records')
     else:
-        matches = results_df[price]
+        matches_filtered = pd.DataFrame([])
+        matches_filtered_json = matches_filtered.to_json(orient='records')
 
-    # print(matches)
-    matches_filtered = matches[['make', 'model', 'year', 'starting price', 'image', 'url']]
-    #.sort_values(by='starting price', key=lambda col: col, ascending=False)
-    matches_filtered_json = matches_filtered.to_json(orient='records')
     return matches_filtered_json
 
 
