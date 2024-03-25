@@ -153,6 +153,7 @@
                     document.getElementById("answer-box").appendChild(tempDiv);
                     **/
 
+                    let num_results = 0;
 
                     // output the results
                     fetch("/cars?" + new URLSearchParams(url_params).toString())
@@ -162,10 +163,11 @@
                             tempDiv.classList.add("result");
                             tempDiv.innerHTML = answerBoxTemplate(make=row['make'], model=row['model'], year=row['year'], specs={'Price': row['starting price']}, picture=row['image'], url=row['url'], reviews=[]);
                             document.getElementById("answer-box").appendChild(tempDiv);
+                            num_results += 1;
                         }));
 
-                    console.log(document.getElementById("answer-box").hasChildNodes())
-                    if (document.getElementById("answer-box").innerHTML === '') {
+                    console.log(num_results);
+                    if (num_results == 0) {
                         let tempDiv = document.createElement("div");
                         tempDiv.classList.add("error");
                         tempDiv.innerHTML = `<p>No cars match your query. Please try again with new inputs.</p>`;
