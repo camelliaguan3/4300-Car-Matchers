@@ -4,8 +4,8 @@ import math
 import re
 
 
-def process_query_tf_idf(query_yes, query_no):
-    """Builds a tf-idf vector for two queries.
+def process_query_tf(query_yes, query_no):
+    """Builds a tf vector for two queries.
     
     Arguments
     =========
