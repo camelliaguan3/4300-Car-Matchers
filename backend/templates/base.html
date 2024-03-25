@@ -88,7 +88,7 @@
                 final = `<div class="result-flex">
                             <div class="result-box result-text"> 
                                 ` + h3 + specs_html + `
-                                <p class='reviews'>Review: ${reviews}</p>
+                                <p class='car-reviews'>Review: ${reviews}</p>
                                 <p class='url'> URL: <a href="${url}">${url}</a></p>
                             </div>
                             <div class="result-box result-square">
@@ -155,22 +155,39 @@
                     document.getElementById("answer-box").appendChild(temp_div);
                     **/
 
-                    var num_results = 0;
+                    let num_results = 0;
+
+                    let limit = 50;
+
+                    let temp_div = document.createElement("div");
+                    temp_div.classList.add("display");
+                    temp_div.innerHTML = `<p>(Displaying the first ${limit} cars that match your query.)</p>`;
+                    document.getElementById("answer-box").appendChild(temp_div);
 
                     // output the results
                     let find_results = fetch("/cars?" + new URLSearchParams(url_params).toString())
                         .then((response) => response.json())
-                        .then((data) => data.forEach(row => {
+                        .then((data) => data.every(row => {
                             let temp_div = document.createElement("div");
                             temp_div.classList.add("result");
                             temp_div.innerHTML = answerBoxTemplate(make = row['make'], model = row['model'], year = row['year'], specs = { 'Price': row['starting price'] }, picture = row['image'], url = row['url'], reviews = []);
                             document.getElementById("answer-box").appendChild(temp_div);
+
                             num_results += 1;
+
+                            // this limits the number of results
+                            if (num_results < limit) {
+                                return true;
+                            } else {
+                                return false;
+                            }
                         }));
 
                     find_results.then(() => {
                         console.log(num_results)
                         if (num_results == 0) {
+                            document.getElementById("answer-box").innerHTML = "";
+
                             let temp_div = document.createElement("div");
                             temp_div.classList.add("error");
                             temp_div.innerHTML = `<p>No cars match your query. Please try again with new inputs.</p>`;
