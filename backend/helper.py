@@ -122,8 +122,13 @@ def accumulate_dot_scores(query_counts, index, idf=None):
 
     return car_scores
 
+
 def compute_car_norms(index, n_cars, idf=None):
     """Precompute the euclidean norm of each car.
+    
+    Arguments
+    =========
+
     index: the inverted index as above
 
     idf: dict,
@@ -131,6 +136,10 @@ def compute_car_norms(index, n_cars, idf=None):
 
     n_cars: int,
         The total number of cars.
+
+    Returns
+    =======
+
     norms: np.array, size: n_cars
         norms[j] = the norm of car j.
     """
@@ -159,7 +168,28 @@ def compute_car_norms(index, n_cars, idf=None):
 
     return np.sqrt(norms)
 
+
 def compute_cos_sim(query, score_func, car_norms, index, idf=None):
+    """Precompute the cosine similarity of each car to the query.
+    
+    Arguments
+    =========
+
+    query: the tf-idf vectorized query
+
+    car_norms: np.array, size: n_cars
+        norms[j] = the norm of car j.
+
+    index: the inverted index as above
+
+    idf: dict,
+        Precomputed idf values for the terms.
+
+    Returns
+    =======
+    
+    cos_sim: list of tuples (score, id)
+    """
     results = []
 
     # calculate the norm for q
