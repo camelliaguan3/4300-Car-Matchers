@@ -99,7 +99,8 @@ def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
         matches = results_df[price]
 
     # print(matches)
-    matches_filtered = matches[['make', 'model', 'year', 'starting price', 'image', 'url']].sort_values(by='starting price', key=lambda col: col, ascending=False)
+    matches_filtered = matches[['make', 'model', 'year', 'starting price', 'image', 'url']]
+    #.sort_values(by='starting price', key=lambda col: col, ascending=False)
     matches_filtered_json = matches_filtered.to_json(orient='records')
     return matches_filtered_json
 
