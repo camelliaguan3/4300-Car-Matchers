@@ -20,6 +20,8 @@ def process_query_tf(query_yes, query_no):
     processed_queries: tuple of dicts
         ({query_yes}, {query_no})
     """
+
+    # MAKE SURE THIS DOESN'T JUST YEET ALL NON LETTERS
     yes = re.findall(r'([a-z]+)', query_yes.lower())
     no = re.findall(r'([a-z]+)', query_no.lower())
 
@@ -61,13 +63,14 @@ def build_inverted_index(cars):
     inverted = {}
 
     for car in cars:
-        original = car["make"].lower().split() + car["model"].lower().split()
+        # TRY TO HANDLE CARS WITH LIKE DASHES OR PLUSSES OR SOMETHING
+        original = car["make"].lower().replace("-", " ").split() + car["model"].lower().split()
         for term in set(original):
             if term in inverted:
                 inverted[term].append((car['id'], original.count(term)))
             else:
                 inverted[term] = [(car['id'], original.count(term))]
-    
+
     return inverted
 
 
@@ -121,7 +124,6 @@ def accumulate_dot_scores(query_counts, index, idf=None):
                     else:
                         car_scores[car_no] = q * tf * idf[term]
 
-    print(car_scores)
     return car_scores
 
 
