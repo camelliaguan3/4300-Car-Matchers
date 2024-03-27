@@ -75,7 +75,7 @@
                     price = `$${price}`
                 }
 
-                specs_html = `<p class='car-spec'>Price: ${price}</p>
+                specs_html = `<p class='car-spec'><b class='spec-title'>Price</b>: ${price}</p>
                 `
 
                 for (let spec in specs) {
@@ -86,7 +86,7 @@
                     console.log(spec_val)
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
 
-                    specs_html += `<p class='car-spec'><b>${spec_edit}</b>: ${spec_val}</p>
+                    specs_html += `<p class='car-spec'><b class='spec-title'>${spec_edit}</b>: ${spec_val}</p>
                     `
                 }
 
@@ -161,7 +161,7 @@
                                                                    model = row['model'], 
                                                                    year = row['year'], 
                                                                    price = row['starting price'], 
-                                                                   specs = {'Car Type (EPA Classification)': row['car type (epa classification)'], 
+                                                                   specs = {'Car Type': row['car type (epa classification)'], 
                                                                             'Colors': row['color options']
                                                                            }, 
                                                                    picture = row['image'], 
