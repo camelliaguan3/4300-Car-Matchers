@@ -28,15 +28,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-def json_search_reviews(query):
-    matches = []
-    merged_df = pd.merge(cars_df, reviews_df, left_on='id', right_on='id', how='inner')
-    matches = merged_df[merged_df['title'].str.lower().str.contains(query.lower())]
-    matches_filtered = matches[['title', 'descr', 'imdb_rating']]
-    matches_filtered_json = matches_filtered.to_json(orient='records')
-    return matches_filtered_json
-
-
 # Sample search using json with pandas
 def json_search(q_yes, q_no, min_p, max_p, no_lim):
     matches = []
@@ -60,9 +51,8 @@ def json_search(q_yes, q_no, min_p, max_p, no_lim):
     return matches_filtered_json
 
 
-
-# cosine similarity attempt
-def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
+# cosine similarity attempt with basic data
+def cos_search_basic(q_yes, q_no, min_p, max_p, no_lim, num_results):
     valid = True
     if q_yes != '':
 
@@ -111,6 +101,11 @@ def cos_search(q_yes, q_no, min_p, max_p, no_lim, num_results):
     return matches_filtered_json
 
 
+# cosine similarity attempt with final data
+def cos_search_final(q_yes, q_no, min_p, max_p, no_lim, num_results):
+    pass
+
+
 @app.route("/")
 def home():
     return render_template('base.html',title="")
@@ -128,7 +123,7 @@ def cars_search():
         min_price = int(min_price)
         max_price = int(max_price)
 
-    return cos_search(text_yes, text_no, min_price, max_price, no_limit, num_results)
+    return cos_search_final(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
 
 if 'DB_NAME' not in os.environ:

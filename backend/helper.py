@@ -22,8 +22,8 @@ def process_query_tf(query_yes, query_no):
     """
 
     # MAKE SURE THIS DOESN'T JUST YEET ALL NON LETTERS
-    yes = re.findall(r'([a-z]+)', query_yes.lower())
-    no = re.findall(r'([a-z]+)', query_no.lower())
+    yes = re.findall(r'([0-9a-z]+)', query_yes.lower())
+    no = re.findall(r'([0-9a-z]+)', query_no.lower())
 
     yes_dict = {}
     for word in yes:
@@ -64,7 +64,7 @@ def build_inverted_index(cars):
 
     for car in cars:
         # TRY TO HANDLE CARS WITH LIKE DASHES OR PLUSSES OR SOMETHING
-        original = car["make"].lower().replace("-", " ").split() + car["model"].lower().split()
+        original = car["make"].lower().replace("-", " ").split() + car["model"].lower().replace("-", " ").split()
         for term in set(original):
             if term in inverted:
                 inverted[term].append((car['id'], original.count(term)))
