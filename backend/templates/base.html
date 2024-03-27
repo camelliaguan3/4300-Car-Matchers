@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <title>Car Match</title>
-<link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
-    rel="stylesheet">
+<link rel='icon' type='image/x-icon' href='../static/images/favicon.ico'>
+<link rel='stylesheet' href='{{ url_for('static', filename='style.css') }}'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap'
+    rel='stylesheet'>
 
 <body>
-    <div class="full-body-container">
-        <div class="top-text">
-            <h1 id="title">🚗 Car Match</h1>
-            <div class="question-container">
+    <div class='full-body-container'>
+        <div class='top-text'>
+            <h1 id='title'>🚗 Car Match</h1>
+            <div class='question-container'>
 
-                <p id="question-budget">What's your budget?</p>
+                <p id='question-budget'>What's your budget?</p>
 
-                <div class="slider-container">
-                    <div class="slider">
-                        <input type="range" min="0" max="700" value="0"
-                            oninput="rangeValueMin.innerText = this.value * 1000">
-                        <div class="row">
-                            <p class="range-val">Min: $</p>
-                            <p class="range-val" id="rangeValueMin">0</p>
+                <div class='slider-container'>
+                    <div class='slider'>
+                        <input type='range' min='0' max='700' value='0'
+                            oninput='rangeValueMin.innerText = this.value * 1000'>
+                        <div class='row'>
+                            <p class='range-val'>Min: $</p>
+                            <p class='range-val' id='rangeValueMin'>0</p>
                         </div>
                     </div>
 
-                    <div class="slider">
-                        <input type="range" min="0" max="700" value="0"
-                            oninput="rangeValueMax.innerText = this.value * 1000">
-                        <div class="row">
-                            <p class="range-val">Max: $</p>
-                            <p class="range-val" id="rangeValueMax">0</p>
+                    <div class='slider'>
+                        <input type='range' min='0' max='700' value='0'
+                            oninput='rangeValueMax.innerText = this.value * 1000'>
+                        <div class='row'>
+                            <p class='range-val'>Max: $</p>
+                            <p class='range-val' id='rangeValueMax'>0</p>
                         </div>
                     </div>
 
-                    <div class="slider">
-                        <input type="checkbox" id="no-limit" name="no-limit" value="no-limit">
-                        <label for="no-limit" class="cbox"> no limit</label><br>
+                    <div class='slider'>
+                        <input type='checkbox' id='no-limit' name='no-limit' value='no-limit'>
+                        <label for='no-limit' class='cbox'> no limit</label><br>
                     </div>
                 </div>
 
-                <div class="input-box-container">
-                    <div class="input-box">
-                        <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                        <input placeholder="Enter the characteristics you want for your dream car"
-                            id="filter-text-val-yes">
+                <div class='input-box-container'>
+                    <div class='input-box'>
+                        <img src='{{ url_for('static', filename='images/mag.png') }}' />
+                        <input placeholder='Enter the characteristics you want for your dream car'
+                            id='filter-text-val-yes'>
                     </div>
 
-                    <div class="input-box">
-                        <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                        <input placeholder="Enter the characteristics you DON'T want for your dream car"
-                            id="filter-text-val-no">
+                    <div class='input-box'>
+                        <img src='{{ url_for('static', filename='images/mag.png') }}' />
+                        <input placeholder='Enter the characteristics you DON'T want for your dream car'
+                            id='filter-text-val-no'>
                     </div>
 
-                    <div class="search-div">
-                        <button type="submit" class="search-button" onclick="filterText()">Search</button>
+                    <div class='search-div'>
+                        <button type='submit' class='search-button' onclick='filterText()'>Search</button>
                     </div>
                 </div>
             </div>
 
-            <div id="answer-box">
+            <div id='answer-box'>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
                 `
 
                 if (price == '-1') {
-                    price = "N/A";
+                    price = 'N/A';
                 } else {
                     price = `$${price}`
                 }
@@ -82,9 +82,11 @@
                     spec_val = specs[spec]
 
                     // capitalize spec name
+                    console.log(spec)
+                    console.log(spec_val)
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
 
-                    specs_html += `<p class='car-spec'>${spec_edit}: ${spec_val}</p>
+                    specs_html += `<p class='car-spec'><b>${spec_edit}</b>: ${spec_val}</p>
                     `
                 }
 
@@ -92,17 +94,17 @@
                     picture = '../static/images/no_image.png'
                 }
 
-                final = `<div class="result-flex">
-                            <div class="result-box result-text"> 
+                final = `<div class='result-flex'>
+                            <div class='result-box result-text'> 
                                 ` + h3 + specs_html + `
                                 <p class='car-reviews'>Review: ${reviews}</p>
-                                <p class='url'> URL: <a href="${url}">${url}</a></p>
+                                <p class='url'> URL: <a href='${url}' target='_blank'>${url}</a></p>
                             </div>
-                            <div class="result-box result-square">
-                                <img class="result-img" src="${picture}" />
+                            <div class='result-box result-square'>
+                                <img class='result-img' src='${picture}' />
                             </div>
                         </div>
-                        <hr class="result-hr">
+                        <hr class='result-hr'>
                         `
 
                 return final
@@ -110,21 +112,21 @@
 
 
             function filterText() {
-                document.getElementById("answer-box").innerHTML = "";
+                document.getElementById('answer-box').innerHTML = '';
 
                 // get input values
-                let filter_yes = document.getElementById("filter-text-val-yes").value;
-                let filter_no = document.getElementById("filter-text-val-no").value;
-                let range_min = document.getElementById("rangeValueMin").textContent;
-                let range_max = document.getElementById("rangeValueMax").textContent;
-                let no_limit = document.getElementById("no-limit").checked;
+                let filter_yes = document.getElementById('filter-text-val-yes').value;
+                let filter_no = document.getElementById('filter-text-val-no').value;
+                let range_min = document.getElementById('rangeValueMin').textContent;
+                let range_max = document.getElementById('rangeValueMax').textContent;
+                let no_limit = document.getElementById('no-limit').checked;
 
                 if ((parseInt(range_min) >= parseInt(range_max)) && !no_limit) {
                     // if min gresater than max
-                    let temp_div = document.createElement("div");
-                    temp_div.classList.add("error");
+                    let temp_div = document.createElement('div');
+                    temp_div.classList.add('error');
                     temp_div.innerHTML = `<p>Please enter in a valid minimum/maximum price combination.</p>`;
-                    document.getElementById("answer-box").appendChild(temp_div);
+                    document.getElementById('answer-box').appendChild(temp_div);
 
                 } else {
                     // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
@@ -142,21 +144,30 @@
 
                     let limit = 50;
 
-                    let temp_div = document.createElement("div");
-                    temp_div.classList.add("display");
+                    let temp_div = document.createElement('div');
+                    temp_div.classList.add('display');
                     temp_div.innerHTML = `<p>(Displaying the first ${limit} cars that match your query.)</p>`;
-                    document.getElementById("answer-box").appendChild(temp_div);
+                    document.getElementById('answer-box').appendChild(temp_div);
 
-                    url_params["num-results"] = limit;
+                    url_params['num-results'] = limit;
 
                     // output the results
-                    let find_results = fetch("/cars?" + new URLSearchParams(url_params).toString())
+                    let find_results = fetch('/cars?' + new URLSearchParams(url_params).toString())
                         .then((response) => response.json())
                         .then((data) => data.every(row => {
-                            let temp_div = document.createElement("div");
-                            temp_div.classList.add("result");
-                            temp_div.innerHTML = answerBoxTemplate(make = row['make'], model = row['model'], year = row['year'], price = row['starting price'], specs = {}, picture = row['image'], url = row['url'], reviews = []);
-                            document.getElementById("answer-box").appendChild(temp_div);
+                            let temp_div = document.createElement('div');
+                            temp_div.classList.add('result');
+                            temp_div.innerHTML = answerBoxTemplate(make = row['make'], 
+                                                                   model = row['model'], 
+                                                                   year = row['year'], 
+                                                                   price = row['starting price'], 
+                                                                   specs = {'Car Type (EPA Classification)': row['car type (epa classification)'], 
+                                                                            'Colors': row['color options']
+                                                                           }, 
+                                                                   picture = row['image'], 
+                                                                   url = row['url'], 
+                                                                   reviews = [/*need to update this*/]);
+                            document.getElementById('answer-box').appendChild(temp_div);
 
                             num_results += 1;
 
@@ -171,12 +182,12 @@
                     find_results.then(() => {
                         console.log(num_results)
                         if (num_results == 0) {
-                            document.getElementById("answer-box").innerHTML = "";
+                            document.getElementById('answer-box').innerHTML = '';
 
-                            let temp_div = document.createElement("div");
-                            temp_div.classList.add("error");
+                            let temp_div = document.createElement('div');
+                            temp_div.classList.add('error');
                             temp_div.innerHTML = `<p>No cars match your query. Please try again with new inputs.</p>`;
-                            document.getElementById("answer-box").appendChild(temp_div);
+                            document.getElementById('answer-box').appendChild(temp_div);
                         }
                     });
                     
@@ -186,15 +197,15 @@
 
             /**
             function filterText(){
-                document.getElementById("answer-box").innerHTML = ""
-                console.log(document.getElementById("filter-text-val").value)
-                fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+                document.getElementById('answer-box').innerHTML = ''
+                console.log(document.getElementById('filter-text-val').value)
+                fetch('/episodes?' + new URLSearchParams({ title: document.getElementById('filter-text-val').value }).toString())
                 .then((response) => response.json())
                 .then((data) => data.forEach(row => {
                     
-                    let temp_div = document.createElement("div")
+                    let temp_div = document.createElement('div')
                     temp_div.innerHTML = answerBoxTemplate(row.title,row.descr,row.imdb_rating)
-                    document.getElementById("answer-box").appendChild(temp_div)
+                    document.getElementById('answer-box').appendChild(temp_div)
                 }));
 
             }

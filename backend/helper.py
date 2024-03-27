@@ -5,7 +5,7 @@ import re
 
 
 def process_query_tf(query_yes, query_no):
-    """Builds a tf vector for two queries.
+    '''Builds a tf vector for two queries.
     
     Arguments
     =========
@@ -19,7 +19,7 @@ def process_query_tf(query_yes, query_no):
     
     processed_queries: tuple of dicts
         ({query_yes}, {query_no})
-    """
+    '''
 
     # MAKE SURE THIS DOESN'T JUST YEET ALL NON LETTERS
     yes = re.findall(r'([0-9a-z]+)', query_yes.lower())
@@ -42,8 +42,8 @@ def process_query_tf(query_yes, query_no):
     return (yes_dict, no_dict)
 
 
-def build_inverted_index(cars):
-    """Builds an inverted index from the messages.
+def build_inverted_index_basic(cars):
+    '''Builds an inverted index from the messages.
 
     Arguments
     =========
@@ -59,12 +59,53 @@ def build_inverted_index(cars):
         such that tuples with smaller ids appear first:
         inverted_index[term] = [(d1, tf1), (d2, tf2), ...]
 
-    """
+    '''
     inverted = {}
 
     for car in cars:
         # TRY TO HANDLE CARS WITH LIKE DASHES OR PLUSSES OR SOMETHING
-        original = car["make"].lower().replace("-", " ").split() + car["model"].lower().replace("-", " ").split()
+        original = car['make'].lower().replace('-', ' ').split() + car['model'].lower().replace('-', ' ').split()
+        for term in set(original):
+            if term in inverted:
+                inverted[term].append((car['id'], original.count(term)))
+            else:
+                inverted[term] = [(car['id'], original.count(term))]
+
+    return inverted
+
+
+# UPDATE TO INCLUDE OTHER SPECS
+def build_inverted_index_final(cars):
+    '''Builds an inverted index from the messages.
+
+    Arguments
+    =========
+
+    msgs: list of dicts.
+
+    Returns
+    =======
+
+    inverted_index: dict
+        For each term, the index contains
+        a sorted list of tuples (id, count_of_term_in_car)
+        such that tuples with smaller ids appear first:
+        inverted_index[term] = [(d1, tf1), (d2, tf2), ...]
+
+    '''
+    inverted = {}
+
+    for car in cars:
+        # TRY TO HANDLE CARS WITH LIKE DASHES OR PLUSSES OR SOMETHING
+        colors = []
+        for color in car['standardized colors']:
+            if color != 'Tbd':
+                colors.append(color.lower())
+
+        original = (car['make'].lower().replace('-', ' ').split() 
+                    + car['model'].lower().replace('-', ' ').split() 
+                    + colors 
+                    + [car['converted car type'].lower()])
         for term in set(original):
             if term in inverted:
                 inverted[term].append((car['id'], original.count(term)))
@@ -75,7 +116,7 @@ def build_inverted_index(cars):
 
 
 def accumulate_dot_scores(query_counts, index, idf=None):
-    """Perform a term-at-a-time iteration to efficiently compute the numerator term of cosine similarity across multiple cars.
+    '''Perform a term-at-a-time iteration to efficiently compute the numerator term of cosine similarity across multiple cars.
 
     Arguments
     =========
@@ -93,7 +134,7 @@ def accumulate_dot_scores(query_counts, index, idf=None):
 
     car_scores: dict
         Dictionary mapping from car ID to the final accumulated score for that car
-    """
+    '''
     car_scores = {}
 
     if idf is None:
@@ -128,7 +169,7 @@ def accumulate_dot_scores(query_counts, index, idf=None):
 
 
 def compute_car_norms(index, n_cars, idf=None):
-    """Precompute the euclidean norm of each car.
+    '''Precompute the euclidean norm of each car.
     
     Arguments
     =========
@@ -146,7 +187,7 @@ def compute_car_norms(index, n_cars, idf=None):
 
     norms: np.array, size: n_cars
         norms[j] = the norm of car j.
-    """
+    '''
     norms = np.zeros((n_cars))
     
     if idf is None:
@@ -174,7 +215,7 @@ def compute_car_norms(index, n_cars, idf=None):
 
 
 def compute_cos_sim(query, score_func, car_norms, index, idf=None):
-    """Precompute the cosine similarity of each car to the query.
+    '''Precompute the cosine similarity of each car to the query.
     
     Arguments
     =========
@@ -193,7 +234,7 @@ def compute_cos_sim(query, score_func, car_norms, index, idf=None):
     =======
     
     cos_sim: list of tuples (score, id)
-    """
+    '''
     results = []
 
     # calculate the norm for q
