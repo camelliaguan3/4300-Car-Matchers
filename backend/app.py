@@ -141,7 +141,7 @@ def cos_search_final(q_yes, q_no, min_p, max_p, no_lim, num_results):
         else:
             matches = results_df[price]
 
-        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'car type (epa classification)', 'color options', 'image', 'url']]
+        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url']]
         # .sort_values(by='starting price', key=lambda col: col, ascending=False)
         matches_filtered_json = matches_filtered.to_json(orient='records')
 

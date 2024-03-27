@@ -101,11 +101,16 @@ def build_inverted_index_final(cars):
         for color in car['standardized colors']:
             if color != 'Tbd':
                 colors.append(color.lower())
+        
+        for color in car['color options']:
+            colors += color.lower().split()
 
         original = (car['make'].lower().replace('-', ' ').split() 
                     + car['model'].lower().replace('-', ' ').split() 
-                    + colors 
-                    + [car['converted car type'].lower()])
+                    + colors
+                    + car['converted car type'].lower().split()
+                    + car['car type (epa classification)'].lower().split())
+        
         for term in set(original):
             if term in inverted:
                 inverted[term].append((car['id'], original.count(term)))

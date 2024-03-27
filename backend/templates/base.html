@@ -86,6 +86,15 @@
                     console.log(spec_val)
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
 
+                    if (spec_edit.toLowerCase() == 'car type') {
+                        console.log(spec_val)
+                        if (spec_val[1] == "") {
+                            spec_val = spec_val[0]
+                        } else {
+                            spec_val = spec_val[0] + ', ' + spec_val[1]
+                        }
+                    }
+
                     specs_html += `<p class='car-spec'><b class='spec-title'>${spec_edit}</b>: ${spec_val}</p>
                     `
                 }
@@ -161,8 +170,8 @@
                                                                    model = row['model'], 
                                                                    year = row['year'], 
                                                                    price = row['starting price'], 
-                                                                   specs = {'Car Type': row['car type (epa classification)'], 
-                                                                            'Colors': row['color options']
+                                                                   specs = {'Car Type': [row['converted car type'], row['car type (epa classification)']], 
+                                                                            'Colors': row['color options - str']
                                                                            }, 
                                                                    picture = row['image'], 
                                                                    url = row['url'], 
