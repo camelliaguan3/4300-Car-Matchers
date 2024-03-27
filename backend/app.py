@@ -123,7 +123,7 @@ def cars_search():
         min_price = int(min_price)
         max_price = int(max_price)
 
-    return cos_search_final(text_yes, text_no, min_price, max_price, no_limit, num_results)
+    return cos_search_basic(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
 
 if 'DB_NAME' not in os.environ:
