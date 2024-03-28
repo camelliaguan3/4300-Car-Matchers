@@ -7,7 +7,16 @@
 <link href='https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap'
     rel='stylesheet'>
 
-<body>
+<body id='background-image'>
+
+    <div>
+        <div >
+            <img class='moving-car-image car-1' src='../static/images/car-images/car-1.png' />
+        </div>
+    </div>
+
+
+
     <div class='full-body-container'>
         <div class='top-text'>
             <h1 id='title'>🚗 Car Match</h1>
@@ -85,7 +94,7 @@
                     spec_edit = spec.charAt(0).toUpperCase() + spec.slice(1)
 
                     if (spec_edit.toLowerCase() == 'car type') {
-                        if (spec_val[1] == "") {
+                        if (spec_val[1] == '') {
                             spec_val = spec_val[0]
                         } else {
                             spec_val = spec_val[0] + ', ' + spec_val[1]

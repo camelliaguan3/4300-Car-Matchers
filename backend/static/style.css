@@ -1,3 +1,13 @@
+@keyframes move-background {
+    from {background-position: bottom;}
+    to {background-position: top;}
+}
+
+@keyframes move-car {
+    from {margin-bottom: 0px;}
+    to {margin-bottom: 1500px;}
+}
+
 :root {
     --theme-color-main: #D2042D;
     --theme-color-slight: #e50834;
@@ -23,26 +33,39 @@ body {
     color: var(--theme-color-text);
 
     width: 100%;
-    background-image: url(./images/background.svg);
+    
+}
+
+#background-image {
+    background-image: url(./images/background.png);
     background-size: cover;  
     background-position: center center;  
-    animation: moveIt 10s linear infinite;
-}
-
-@keyframes moveIt {
-    from {background-position: bottom;}
-    to {background-position: top;}
-}
-
-@media (max-width: 1300px) {
-
+    animation: move-background 10s linear infinite;
 }
 
 @media (max-width: 1100px) {
-    body {
+    #background-image {
         background-image: none;
     }
 }
+
+
+.car-container {
+    position: relative;
+}
+
+.moving-car-image {
+    position: fixed;
+    width: 80px;
+}
+
+.car-1 {
+    left: 15px;
+    bottom: -300px;
+    margin-bottom: 0;
+    animation: move-car 5s linear;
+}
+
 
 
 
