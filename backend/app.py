@@ -6,6 +6,8 @@ from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 import helper
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import normalize
+
 
 # ROOT_PATH for linking with all your files. 
 # Feel free to use a config.py or settings.py with a global export variable
@@ -23,6 +25,7 @@ with open(json_file_path, 'r') as file:
     cars_data = data['cars']
     cars_df = pd.DataFrame(data['cars'])
     reviews_df = pd.DataFrame(data['reviews'])
+
 
 app = Flask(__name__)
 CORS(app)
@@ -152,9 +155,61 @@ def cos_search_final(q_yes, q_no, min_p, max_p, no_lim, num_results):
     return matches_filtered_json
 
 
+def svd_stuff(q_yes, q_no, min_p, max_p, no_lim, num_results):
+        # handle case where the final list of cars is empty (False if empty)
+    valid = True
+
+    if q_yes != '':
+        cars = helper.parse_svd_data(cars_data)
+        vectorizer, word_to_ind, ind_to_word, docs_comp, words_comp = helper.decompose(cars)
+
+        words_comp_normed = normalize(words_comp, axis = 1)
+        docs_comp_normed = normalize(docs_comp)
+
+        query_tfidf = vectorizer.transform([q_yes]).toarray()
+        query_vec = normalize(np.dot(query_tfidf, words_comp)).squeeze()
+
+        similar_cars = helper.svd_closest_cars_to_query(query_vec, docs_comp_normed, cars, num_results)
+
+        final = []
+
+        for id, _, _ in similar_cars:
+            final.append(cars_data[id]) 
+
+        results_df = pd.DataFrame(final)
+
+        if final == []:
+            valid = False
+        
+    else:
+        results_df = cars_df
+
+    if valid:
+        price = None
+        if not no_lim:
+            price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
+
+        matches = None
+        if price is None:
+            matches = results_df
+        else:
+            matches = results_df[price]
+
+        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url']]
+        # .sort_values(by='starting price', key=lambda col: col, ascending=False)
+        matches_filtered_json = matches_filtered.to_json(orient='records')
+
+    else:
+        matches_filtered = pd.DataFrame([])
+        matches_filtered_json = matches_filtered.to_json(orient='records')
+
+    return matches_filtered_json
+
+
 @app.route('/')
 def home():
     return render_template('base.html',title='')
+
 
 @app.route('/cars')
 def cars_search():
@@ -169,7 +224,7 @@ def cars_search():
         min_price = int(min_price)
         max_price = int(max_price)
 
-    return cos_search_final(text_yes, text_no, min_price, max_price, no_limit, num_results)
+    return svd_stuff(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
 
 if 'DB_NAME' not in os.environ:
