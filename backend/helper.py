@@ -304,8 +304,6 @@ def parse_svd_data(data):
     cars = [(car['id'], car['make'], car['model'], car['text'])
                 for car in data]
 
-    np.random.shuffle(cars)
-
     return cars
 
 
@@ -355,7 +353,6 @@ def svd_closest_cars_to_query(query_vec_in, docs_comp_normed, cars, k):
     '''
     sims = docs_comp_normed.dot(query_vec_in)
     asort = np.argsort(-sims)[:k+1]
-    print(asort)
 
     car_list = [(cars[i][0], cars[i][1], sims[i]) for i in asort[1:]]
 

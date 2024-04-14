@@ -206,6 +206,8 @@ def svd_stuff(q_yes, q_no, min_p, max_p, no_lim, num_results):
     return matches_filtered_json
 
 
+
+
 @app.route('/')
 def home():
     return render_template('base.html',title='')
@@ -224,7 +226,7 @@ def cars_search():
         min_price = int(min_price)
         max_price = int(max_price)
 
-    return svd_stuff(text_yes, text_no, min_price, max_price, no_limit, num_results)
+    return cos_search_final(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
 
 if 'DB_NAME' not in os.environ:
