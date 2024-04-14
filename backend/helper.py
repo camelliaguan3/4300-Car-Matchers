@@ -304,6 +304,8 @@ def parse_svd_data(data):
     cars = [(car['id'], car['make'], car['model'], car['text'])
                 for car in data]
 
+    # np.random.shuffle(cars)
+
     return cars
 
 
