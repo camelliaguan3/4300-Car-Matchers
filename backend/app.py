@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
-import helper
+import ml, cossim
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import normalize
@@ -61,13 +61,13 @@ def cos_search_basic(q_yes, q_no, min_p, max_p, no_lim, num_results):
 
         # get inverted index and process the queries to tf-idf vectors
         no_cars = len(cars_data)
-        inverted_index = helper.build_inverted_index_basic(cars_data)
-        query_yes, query_no = helper.process_query_tf(q_yes, q_no)
+        inverted_index = cossim.build_inverted_index_basic(cars_data)
+        query_yes, query_no = cossim.process_query_tf(q_yes, q_no)
 
         idf = None
-        score_func = helper.accumulate_dot_scores
-        car_norms = helper.compute_car_norms(inverted_index, no_cars, idf=None)
-        results = helper.compute_cos_sim(query_yes, score_func, car_norms, inverted_index, idf)
+        score_func = cossim.accumulate_dot_scores
+        car_norms = cossim.compute_car_norms(inverted_index, no_cars, idf=None)
+        results = cossim.compute_cos_sim(query_yes, score_func, car_norms, inverted_index, idf)
         
         final = []
 
@@ -112,13 +112,13 @@ def cos_search_final(q_yes, q_no, min_p, max_p, no_lim, num_results):
     if q_yes != '':
         # get inverted index and process the queries to tf-idf vectors
         no_cars = len(cars_data)
-        inverted_index = helper.build_inverted_index_final(cars_data)
-        query_yes, query_no = helper.process_query_tf(q_yes, q_no)
+        inverted_index = cossim.build_inverted_index_final(cars_data)
+        query_yes, query_no = cossim.process_query_tf(q_yes, q_no)
 
         idf = None
-        score_func = helper.accumulate_dot_scores
-        car_norms = helper.compute_car_norms(inverted_index, no_cars, idf=None)
-        results = helper.compute_cos_sim(query_yes, score_func, car_norms, inverted_index, idf)
+        score_func = cossim.accumulate_dot_scores
+        car_norms = cossim.compute_car_norms(inverted_index, no_cars, idf=None)
+        results = cossim.compute_cos_sim(query_yes, score_func, car_norms, inverted_index, idf)
         
         final = []
 
@@ -160,8 +160,8 @@ def svd_stuff(q_yes, q_no, min_p, max_p, no_lim, num_results):
     valid = True
 
     if q_yes != '':
-        cars = helper.parse_svd_data(cars_data)
-        vectorizer, word_to_ind, ind_to_word, docs_comp, words_comp = helper.decompose(cars)
+        cars = ml.parse_svd_data(cars_data)
+        vectorizer, word_to_ind, ind_to_word, docs_comp, words_comp = ml.decompose(cars)
 
         words_comp_normed = normalize(words_comp, axis = 1)
         docs_comp_normed = normalize(docs_comp)
@@ -169,7 +169,7 @@ def svd_stuff(q_yes, q_no, min_p, max_p, no_lim, num_results):
         query_tfidf = vectorizer.transform([q_yes]).toarray()
         query_vec = normalize(np.dot(query_tfidf, words_comp)).squeeze()
 
-        similar_cars = helper.svd_closest_cars_to_query(query_vec, docs_comp_normed, cars, num_results)
+        similar_cars = ml.svd_closest_cars_to_query(query_vec, docs_comp_normed, cars, num_results)
 
         final = []
 
