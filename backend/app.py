@@ -2,7 +2,7 @@ import json
 import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
-import ml, cossim1, cossim2
+import ml, cossim1
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import normalize
@@ -22,6 +22,7 @@ json_file_path = os.path.join(current_directory, 'init.json')
 with open(json_file_path, 'r') as file:
     data = json.load(file)
     cars_data = data['cars']
+    reviews_data = data['reviews']
     cars_df = pd.DataFrame(data['cars'])
     reviews_df = pd.DataFrame(data['reviews'])
 
@@ -88,58 +89,6 @@ def cos_search1(q_yes, q_no, min_p, max_p, no_lim, num_results):
             price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
         else:
             price = (results_df['starting price'] > min_p)
-
-        matches = None
-        if price is None:
-            matches = results_df
-        else:
-            matches = results_df[price]
-
-        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url']]
-        # .sort_values(by='starting price', key=lambda col: col, ascending=False)
-        matches_filtered_json = matches_filtered.to_json(orient='records')
-
-    else:
-        matches_filtered = pd.DataFrame([])
-        matches_filtered_json = matches_filtered.to_json(orient='records')
-
-    return matches_filtered_json
-
-
-# cosine similarity attempt second prototype (Bad, needs fixing, but idk where the problem is)
-def cos_search2(q_yes, q_no, min_p, max_p, no_lim, num_results):
-    # handle case where the final list of cars is empty (False if empty)
-    valid = True
-
-    if q_yes != '':
-        # get inverted index and process the queries to tf-idf vectors
-        no_cars = len(cars_data)
-        inverted_index = cossim2.build_inverted_index(cars_data)
-        query_yes, query_no = cossim2.process_query_tf(q_yes, q_no)
-
-        idf = cossim2.compute_idf(inverted_index, no_cars)
-        score_func = cossim2.accumulate_dot_scores
-        car_norms = cossim2.compute_car_norms(inverted_index, idf, no_cars)
-        results = cossim2.compute_cos_sim(q_yes, inverted_index, idf, car_norms, score_func)
-        
-        final = []
-
-        for score, id in results[:num_results]:
-            print(score, id, cars_data[id], '\n')
-            final.append(cars_data[id])    
-
-        results_df = pd.DataFrame(final)
-
-        if final == []:
-            valid = False
-        
-    else:
-        results_df = cars_df
-
-    if valid:
-        price = None
-        if not no_lim:
-            price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
 
         matches = None
         if price is None:
