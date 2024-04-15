@@ -86,6 +86,8 @@ def cos_search1(q_yes, q_no, min_p, max_p, no_lim, num_results):
         price = None
         if not no_lim:
             price = ((results_df['starting price'] > min_p) & (results_df['starting price'] < max_p))
+        else:
+            price = (results_df['starting price'] > min_p)
 
         matches = None
         if price is None:
@@ -222,8 +224,8 @@ def cars_search():
     num_results  = int(request.args.get('num-results'))
 
     if not no_limit:
-        min_price = int(min_price)
         max_price = int(max_price)
+    min_price = int(min_price)
 
     return cos_search1(text_yes, text_no, min_price, max_price, no_limit, num_results)
 
