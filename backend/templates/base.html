@@ -94,8 +94,8 @@
 
 
         <script>
-            function answerBoxTemplate(make, model, year, price, specs, picture, url, reviews) {
-                h3 = `<h3 class='car-make-model'>${year} ${make} ${model}</h3>
+            function answerBoxTemplate(make, model, years, price, specs, picture, urls, reviews) {
+                h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
 
                 if (price == '-1') {
@@ -104,6 +104,24 @@
                     price = `$${price}`
                 }
 
+                years_html = `<p class='car-spec'><b class='spec-title'>Years: </b> `
+
+                for (let y = 0; y < years.length; y++) {
+                    year = years[y]
+                    url = urls[y]
+
+                    if (y == years.length - 1) {
+                        years_html += `<a href='${url}' target='_blank'>${year}</a>`
+                    }
+                    else {
+                        years_html += `<a href='${url}' target='_blank'>${year}</a>, `
+                    }
+
+                }
+
+                years_html += `</p>
+                `
+                
                 specs_html = `<p class='car-spec'><b class='spec-title'>Price</b>: ${price}</p>
                 `
 
@@ -131,9 +149,8 @@
 
                 final = `<div class='result-flex'>
                             <div class='result-box result-text'> 
-                                ` + h3 + specs_html + `
+                                ` + h3 + years_html + specs_html + `
                                 <p class='car-reviews'>Review: ${reviews}</p>
-                                <p class='url'> URL: <a href='${url}' target='_blank'>${url}</a></p>
                             </div>
                             <div class='result-box result-square'>
                                 <img class='result-img' src='${picture}' />

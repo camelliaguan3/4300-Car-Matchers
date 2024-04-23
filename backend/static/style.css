@@ -30,6 +30,8 @@
     --cars34: -1000px;
     --cars56: -2000px;
     --max-margin: 3000px;
+    --slow-speed: 8s;
+    --fast-speed: 6s;
 }
 
 * {
@@ -67,35 +69,35 @@ body {
     left: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars12);
-    animation: move-car-1 8s linear infinite;
+    animation: move-car-1 var(--fast-speed) linear infinite;
 }
 
 .car-2 {
     right: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars12);
-    animation: move-car-1 10s linear infinite;
+    animation: move-car-1 var(--slow-speed) linear infinite;
 }
 
 .car-3 {
     left: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars34);
-    animation: move-car-2 8s linear infinite;
+    animation: move-car-2 var(--fast-speed) linear infinite;
 }
 
 .car-4 {
     right: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars34);
-    animation: move-car-2 10s linear infinite;
+    animation: move-car-2 var(--slow-speed) linear infinite;
 }
 
 .car-5 {
     left: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars56);
-    animation: move-car-3 8s linear infinite;
+    animation: move-car-3 var(--fast-speed) linear infinite;
 }
 
 .car-6 {
