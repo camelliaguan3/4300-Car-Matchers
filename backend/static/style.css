@@ -104,7 +104,7 @@ body {
     right: 0.6em;
     bottom: -250px;
     margin-bottom: var(--cars56);
-    animation: move-car-3 10s linear infinite;
+    animation: move-car-3 var(--slow-speed) linear infinite;
 }
 
 
