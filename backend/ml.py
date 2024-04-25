@@ -22,9 +22,40 @@ def parse_svd_data(data, reviews):
 
     cars: list of car tuples
     '''
-    pass
+    # we can make each car tuple consist of the car id, make, model, text, and their reviews
+    cars = [(car['id'], car['make'], car['model'], car['text'], reviews[car['id']]['description']) 
+            for car in data]
+    
+    np.random.shuffle(cars)
+
+    return cars
+
 
 # select basis, change vector space to those selected basis values.
+
+# decompose?
+
+def decompose(cars):
+    ''' Create term-document matrix and decompose.
+
+    Arguments
+    =========
+
+    cars: the list of car tuples with id, make, model, text, and reviews
+
+    Returns
+    =======
+
+    idk
+    
+    '''
+    # maybe we can change around the max_df and min_df to get better results
+    vectorizer = TfidfVectorizer(stop_words = 'english', max_df = .7, min_df = 75)
+
+    # create the term-document matrix
+    
+
+
 
 # do cosine similarity in new vector space, use matrix from decomposition, map queries and documents into the new space
 # don’t forget to add reviews to the search as well (when searching, should look into the reviews of each car to then output, so maybe if search has something like “fast” and a review has that, the results should involve this)

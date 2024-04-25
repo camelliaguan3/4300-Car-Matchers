@@ -158,6 +158,13 @@ def svd_stuff(q_yes, q_no, min_p, max_p, no_lim, num_results):
     return matches_filtered_json
 
 
+def svd_cossim(q_yes, q_no, min_p, max_p, no_lim, num_results):
+    valid = True
+
+    if q_yes != '':
+        pass
+
+
 @app.route('/')
 def home():
     return render_template('base.html',title='')
