@@ -2,26 +2,22 @@ import numpy as np
 import re
 
 
-def process_query_tf(query_yes, query_no):
-    ''' Builds a tf vector for two queries.
+def process_query_tf(query_yes):
+    ''' Builds a tf vector for queries.
     
     Arguments
     =========
     
     query_yes: str.
-    
-    query_no: str.
-    
+        
     Returns
     =======
     
-    processed_queries: tuple of dicts
-        ({query_yes}, {query_no})
+    processed_queries: dict
     '''
 
     # MAKE SURE THIS DOESN'T JUST YEET ALL NON LETTERS
     yes = re.findall(r'([0-9a-z]+)', query_yes.lower())
-    no = re.findall(r'([0-9a-z]+)', query_no.lower())
 
     yes_dict = {}
     for word in yes:
@@ -30,14 +26,7 @@ def process_query_tf(query_yes, query_no):
         else:
             yes_dict[word] = 1
 
-    no_dict = {}
-    for word in no:
-        if word in no_dict:
-            no_dict[word] += 1
-        else:
-            no_dict[word] = 1
-
-    return (yes_dict, no_dict)
+    return yes_dict
 
 
 def build_inverted_index_basic(cars):

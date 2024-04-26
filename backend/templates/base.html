@@ -76,12 +76,6 @@
                             id='filter-text-val-yes'>
                     </div>
 
-                    <div class='input-box'>
-                        <img src='{{ url_for('static', filename='images/mag.png') }}' />
-                        <input placeholder="Enter the characteristics you DON'T want for your dream car"
-                            id='filter-text-val-no'>
-                    </div>
-
                     <div class='search-div'>
                         <button type='submit' class='search-button' onclick='filterText()'>Search</button>
                     </div>
@@ -168,7 +162,6 @@
 
                 // get input values
                 let filter_yes = document.getElementById('filter-text-val-yes').value;
-                let filter_no = document.getElementById('filter-text-val-no').value;
                 let range_min = document.getElementById('rangeValueMin').textContent;
                 let range_max = document.getElementById('rangeValueMax').textContent;
                 let no_limit = document.getElementById('no-limit').checked;
@@ -182,7 +175,7 @@
 
                 } else {
                     // url search params can be organized as something like: /cars?yes=...&no=...&min=...&max=...
-                    let url_params = { 'yes': filter_yes, 'no': filter_no };
+                    let url_params = { 'yes': filter_yes };
 
                     if (no_limit) {
                         url_params['no-limit'] = true;
