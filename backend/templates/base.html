@@ -114,7 +114,8 @@
                 if (price == '-1') {
                     price = 'N/A';
                 } else {
-                    price = `$${price}`
+                    let usd = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD',});
+                    price = `${usd.format(price)}`.slice(0, -3);
                 }
 
                 years_html = `<p class='car-spec'><b class='spec-title'>Years: </b> `
