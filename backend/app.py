@@ -2,7 +2,7 @@ import json
 import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
-import backend.helpers.ml as ml, backend.helpers.cossim1 as cossim1
+import helpers.ml as ml, helpers.cossim1 as cossim1
 import numpy as np
 import pandas as pd
 import re
