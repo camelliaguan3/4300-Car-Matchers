@@ -88,7 +88,26 @@
 
 
         <script>
-            function answerBoxTemplate(make, model, years, price, specs, picture, urls, reviews) {
+            function calculateStarRating(rating) {
+                const fullStar = '&#9733;';
+                const emptyStar = '&#9734;';
+  
+                const fullStars = Math.round(rating);
+                const emptyStars = 5 - fullStars;
+                
+                let star_rating = '';
+                for (let i = 0; i < fullStars; i++) {
+                    star_rating += fullStar;
+                }
+
+                for (let i = 0; i < emptyStars; i++) {
+                    star_rating += emptyStar;
+                }
+                
+                return star_rating; 
+            }
+
+            function answerBoxTemplate(make, model, years, price, specs, picture, urls, rating, reviews) {
                 h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
 
@@ -141,10 +160,12 @@
                     picture = '../static/images/no_image.png'
                 }
 
+                let star_rating = calculateStarRating(rating)
+
                 final = `<div class='result-flex'>
                             <div class='result-box result-text'> 
                                 ` + h3 + years_html + specs_html + `
-                                <p class='car-reviews'>Review: ${reviews}</p>
+                                <p class='car-reviews'>Rating: ${star_rating} (${rating} out of 5)</p>
                             </div>
                             <div class='result-box result-square'>
                                 <img class='result-img' src='${picture}' />
@@ -212,7 +233,8 @@
                                                                            }, 
                                                                    picture = row['image'], 
                                                                    url = row['url'], 
-                                                                   reviews = [/*need to update this*/]);
+                                                                   rating = row['rating'],
+                                                                   reviews = row['reviews']);
                             document.getElementById('answer-box').appendChild(temp_div);
 
                             num_results += 1;
@@ -226,7 +248,6 @@
                         }));
 
                     find_results.then(() => {
-                        console.log(num_results)
                         if (num_results == 0) {
                             document.getElementById('answer-box').innerHTML = '';
 

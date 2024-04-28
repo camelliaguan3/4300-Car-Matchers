@@ -2,7 +2,7 @@ import json
 import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
-import ml, cossim1
+import backend.helpers.ml as ml, backend.helpers.cossim1 as cossim1
 import numpy as np
 import pandas as pd
 import re
@@ -19,13 +19,33 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 # Specify the path to the JSON file relative to the current script
 json_file_path = os.path.join(current_directory, 'init.json')
 
+
+def process_reviews_and_cars(cars_data, reviews_data):
+    combined = []
+    
+    for car in cars_data:
+        id = car['id']
+        review = list(filter(lambda r: r['id'] == id, reviews_data))[0]
+
+        rating = review['rating']
+        reviews = review['reviews']
+
+        car['rating'] = rating
+        car['reviews'] = reviews
+        combined.append(car)
+
+    return combined
+
+
 # Assuming your JSON data is stored in a file named 'init.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
     cars_data = data['cars']
     reviews_data = data['reviews']
-    cars_df = pd.DataFrame(data['cars'])
-    reviews_df = pd.DataFrame(data['reviews'])
+    combined_data = process_reviews_and_cars(cars_data, reviews_data)
+    cars_df = pd.DataFrame(cars_data)
+    reviews_df = pd.DataFrame(reviews_data)
+    combined_df = pd.DataFrame(combined_data)
 
 
 app = Flask(__name__)
@@ -39,8 +59,8 @@ def cos_search1(q, min_p, max_p, no_lim, num_results):
 
     if q != '':
         # get inverted index and process the queries to tf-idf vectors
-        no_cars = len(cars_data)
-        inverted_index = cossim1.build_inverted_index_final(cars_data)
+        no_cars = len(combined_data)
+        inverted_index = cossim1.build_inverted_index_final(combined_data)
         query = cossim1.process_query_tf(q)
 
         idf = None
@@ -51,7 +71,7 @@ def cos_search1(q, min_p, max_p, no_lim, num_results):
         final = []
 
         for score, id in results[:num_results]:
-            final.append(cars_data[id])    
+            final.append(combined_data[id])    
 
         results_df = pd.DataFrame(final)
 
@@ -59,7 +79,7 @@ def cos_search1(q, min_p, max_p, no_lim, num_results):
             valid = False
         
     else:
-        results_df = cars_df
+        results_df = combined_df
 
     if valid:
         price = None
@@ -74,7 +94,7 @@ def cos_search1(q, min_p, max_p, no_lim, num_results):
         else:
             matches = results_df[price]
 
-        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url']]
+        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url', 'rating', 'reviews']]
         # .sort_values(by='starting price', key=lambda col: col, ascending=False)
         matches_filtered_json = matches_filtered.to_json(orient='records')
 
