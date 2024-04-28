@@ -70,7 +70,7 @@ def cos_search1(q, min_p, max_p, no_lim, num_results):
         
         final = []
 
-        for score, id in results[:num_results]:
+        for score, id in results:
             final.append(combined_data[id])    
 
         results_df = pd.DataFrame(final)
