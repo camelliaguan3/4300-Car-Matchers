@@ -174,11 +174,8 @@
 
                 const color_len = 25
                 if (color.length > color_len) {
-                    specs_html += `<p class='car-spec' id='colors-${id}'><b class='spec-title'>Colors</b>: ${color.substring(0, color_len)}
-                        <span class='dots' id='dots-${id}'>...</span><span class='read-more' id='read-more-${id}'>${color.substring(color_len)}</span>
-                        <button onclick='readMore(${id})' class='read-more-btn' id='read-more-btn-${id}'>read more</button>
-                        </p>
-                        
+                    specs_html += `<p class='car-spec' id='colors-${id}'><b class='spec-title'>Colors</b>: ${color.substring(0, color_len)}<span class='dots' id='dots-${id}'>...</span><span class='read-more' id='read-more-${id}'>${color.substring(color_len)}</span>
+                        <button onclick='readMore(${id})' class='read-more-btn' id='read-more-btn-${id}'>read more</button></p>
                         `
                 } else {
                     specs_html += `<p class='car-spec'><b class='spec-title'>Colors</b>: ${color}</p>
