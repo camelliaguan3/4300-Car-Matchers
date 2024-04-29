@@ -187,12 +187,12 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
                 
                 for id_cos, score_cos in results_cos:
                     if id == id_cos:
-                        score += score_cos * 1
+                        score += score_cos * 0.8
                         break
 
                 for id_svd, score_svd in results_svd:
                     if id == id_svd:
-                        score += score_svd * 0.3
+                        score += score_svd * 0.2
                         break
             
                 combined.append((id, score))
