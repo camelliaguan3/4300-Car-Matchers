@@ -18,7 +18,6 @@ def process_query_tf(query_yes):
 
     # MAKE SURE THIS DOESN'T JUST YEET ALL NON LETTERS
     yes = re.findall(r'([0-9a-z]+)', query_yes.lower())
-
     yes_dict = {}
     for word in yes:
         if word in yes_dict:
@@ -226,7 +225,7 @@ def compute_cos_sim(query, score_func, car_norms, index, idf=None):
     Returns
     =======
     
-    cos_sim: list of tuples (score, id)
+    cos_sim: list of tuples (id, score)
     '''
     results = []
 
@@ -244,10 +243,12 @@ def compute_cos_sim(query, score_func, car_norms, index, idf=None):
         scores = score_func(query, index, idf)
 
         for car in scores:
-            results.append((scores[car] / (q_norms * car_norms[car]), car))
+            score = scores[car] / (q_norms * car_norms[car])
+            results.append((car, score))
+
 
         # sort the tuples by score
-        results.sort(key = lambda x: x[0], reverse=True)
+        results.sort(key = lambda x: x[1], reverse=True)
 
     else:
         for term in query:
@@ -262,10 +263,11 @@ def compute_cos_sim(query, score_func, car_norms, index, idf=None):
         scores = score_func(query, index, idf)
 
         for car in scores:
-            results.append((scores[car] / (q_norms * car_norms[car]), car))
+            score = scores[car] / (q_norms * car_norms[car])
+            results.append((car, score))
 
 
         # sort the tuples by score
-        results.sort(key = lambda x: x[0], reverse=True)
+        results.sort(key = lambda x: x[1], reverse=True)
 
     return results
