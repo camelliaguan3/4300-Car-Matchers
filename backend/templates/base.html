@@ -107,7 +107,23 @@
                 return star_rating; 
             }
 
-            function answerBoxTemplate(make, model, years, price, specs, picture, urls, rating, reviews) {
+            function readMore() {
+                var dots = document.getElementById("dots");
+                var more_text = document.getElementById("read-more");
+                var btn_text = document.getElementById("read-more-btn");
+
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btn_text.innerHTML = "read more"; 
+                    more_text.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btn_text.innerHTML = "read less"; 
+                    more_text.style.display = "inline";
+                }
+                }
+
+            function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews) {
                 h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
 
@@ -132,7 +148,6 @@
                     }
 
                 }
-
                 years_html += `</p>
                 `
                 
@@ -156,6 +171,20 @@
                     specs_html += `<p class='car-spec'><b class='spec-title'>${spec_edit}</b>: ${spec_val}</p>
                     `
                 }
+
+                const color_len = 25
+                if (color.length > color_len) {
+                    specs_html += `<p class='car-spec'><b class='spec-title'>Colors</b>: ${color.substring(0, color_len)}
+                        <span id='dots'>...</span><span id='read-more'>${color.substring(color_len)}</span>
+                        <button onclick='readMore()' id="read-more-btn">read more</button>
+                        </p>
+                        
+                        `
+                } else {
+                    specs_html += `<p class='car-spec'><b class='spec-title'>Colors</b>: ${color}</p>
+                        `
+                }
+
 
                 if (picture == '') {
                     picture = '../static/images/no_image.png'
@@ -229,9 +258,8 @@
                                                                    model = row['model'], 
                                                                    year = row['year'], 
                                                                    price = row['starting price'], 
-                                                                   specs = {'Car Type': [row['converted car type'], row['car type (epa classification)']], 
-                                                                            'Colors': row['color options - str']
-                                                                           }, 
+                                                                   specs = {'Car Type': [row['converted car type'], row['car type (epa classification)']]}, 
+                                                                   color = row['color options - str'],
                                                                    picture = row['image'], 
                                                                    url = row['url'], 
                                                                    rating = row['rating'],

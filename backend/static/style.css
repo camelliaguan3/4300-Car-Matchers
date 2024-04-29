@@ -24,6 +24,7 @@
     --theme-color-slight: #e50834;
     --theme-color-text: #101010;
     --theme-color-spec: #717171;
+    --link-color: rgba(22, 22, 153, 0.725);
     --button: #f5f5f5;
     --button-hover: #dbdada;
     --cars12: 0px;
@@ -185,6 +186,11 @@ input[type='range']:active {
     accent-color: var(--theme-color-slight); 
 }
 
+input[type='checkbox'] {
+    accent-color: var(--theme-color-slight);
+
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -193,6 +199,7 @@ input[type='range']:active {
 .cbox {
     padding: 6px;
 }
+
 
 
 
@@ -223,6 +230,7 @@ input[type='range']:active {
     border: none;
     outline: 0;
 }
+
 
 
 
@@ -329,4 +337,25 @@ input[type='range']:active {
 .spec-title {
     color: var(--theme-color-text);
     font-weight: bolder;
+}
+
+#read-more-btn {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+    font: inherit;
+    border-radius: 0;
+    appearance: none;
+    text-decoration: underline;
+    color: var(--link-color);
+}
+
+#read-more {
+    display: none;
+}
+
+a {
+    color: var(--link-color);
 }
