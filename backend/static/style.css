@@ -339,7 +339,7 @@ input[type='checkbox'] {
     font-weight: bolder;
 }
 
-#read-more-btn {
+.read-more-btn {
     background-color: transparent;
     border: none;
     margin: 0;
@@ -352,7 +352,7 @@ input[type='checkbox'] {
     color: var(--link-color);
 }
 
-#read-more {
+.read-more {
     display: none;
 }
 

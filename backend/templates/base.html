@@ -107,23 +107,23 @@
                 return star_rating; 
             }
 
-            function readMore() {
-                var dots = document.getElementById("dots");
-                var more_text = document.getElementById("read-more");
-                var btn_text = document.getElementById("read-more-btn");
+            function readMore(id) {
+                var dots = document.getElementById(`dots-${id}`);
+                var more_text = document.getElementById(`read-more-${id}`);
+                var btn_text = document.getElementById(`read-more-btn-${id}`);
 
-                if (dots.style.display === "none") {
-                    dots.style.display = "inline";
-                    btn_text.innerHTML = "read more"; 
-                    more_text.style.display = "none";
+                if (dots.style.display === 'none') {
+                    dots.style.display = 'inline';
+                    btn_text.innerHTML = 'read more'; 
+                    more_text.style.display = 'none';
                 } else {
-                    dots.style.display = "none";
-                    btn_text.innerHTML = "read less"; 
-                    more_text.style.display = "inline";
+                    dots.style.display = 'none';
+                    btn_text.innerHTML = 'read less'; 
+                    more_text.style.display = 'inline';
                 }
                 }
 
-            function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews) {
+            function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews, id) {
                 h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
 
@@ -174,9 +174,9 @@
 
                 const color_len = 25
                 if (color.length > color_len) {
-                    specs_html += `<p class='car-spec'><b class='spec-title'>Colors</b>: ${color.substring(0, color_len)}
-                        <span id='dots'>...</span><span id='read-more'>${color.substring(color_len)}</span>
-                        <button onclick='readMore()' id="read-more-btn">read more</button>
+                    specs_html += `<p class='car-spec' id='colors-${id}'><b class='spec-title'>Colors</b>: ${color.substring(0, color_len)}
+                        <span class='dots' id='dots-${id}'>...</span><span class='read-more' id='read-more-${id}'>${color.substring(color_len)}</span>
+                        <button onclick='readMore(${id})' class='read-more-btn' id='read-more-btn-${id}'>read more</button>
                         </p>
                         
                         `
@@ -254,6 +254,8 @@
                         .then((data) => data.every(row => {
                             let temp_div = document.createElement('div');
                             temp_div.classList.add('result');
+
+                            num_results += 1;
                             temp_div.innerHTML = answerBoxTemplate(make = row['make'], 
                                                                    model = row['model'], 
                                                                    year = row['year'], 
@@ -263,10 +265,11 @@
                                                                    picture = row['image'], 
                                                                    url = row['url'], 
                                                                    rating = row['rating'],
-                                                                   reviews = row['reviews']);
+                                                                   reviews = row['reviews'],
+                                                                   id = num_results);
                             document.getElementById('answer-box').appendChild(temp_div);
 
-                            num_results += 1;
+                            
 
                             // this limits the number of results
                             if (num_results < limit) {
