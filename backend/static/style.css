@@ -339,6 +339,10 @@ input[type='checkbox'] {
     font-weight: bolder;
 }
 
+.car-sim {
+    font-size: 14px;
+}
+
 .read-more-btn {
     background-color: transparent;
     border: none;

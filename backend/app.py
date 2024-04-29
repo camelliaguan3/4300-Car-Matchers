@@ -154,6 +154,7 @@ def svd_cossim(q, min_p, max_p, no_lim, num_results):
 def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
     # handle case where the final list of cars is empty (False if empty)
     valid = True
+    k = 60
 
     if q != '':
         # cossim
@@ -168,8 +169,8 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
         
         # svd
         cars = ml.parse_svd_data(cars_data, reviews_data)
-        vectorizer, word_to_index, index_to_word, u, s, v = ml.decompose(cars)
-        results_svd = ml.svd_closest_cars_to_query(q, cars, vectorizer, v, u, num_results)
+        vectorizer, word_to_index, index_to_word, u, s, v = ml.decompose(cars, k)
+        results_svd = ml.svd_closest_cars_to_query(q, cars, vectorizer, v, u, k)
         
         final = []
         combined = []
@@ -191,7 +192,7 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
 
                 for id_svd, score_svd in results_svd:
                     if id == id_svd:
-                        score += score_svd * 0.5
+                        score += score_svd * 0.3
                         break
             
                 combined.append((id, score))
@@ -199,7 +200,10 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
             combined.sort(key = lambda x: x[1], reverse=True)
 
         for id, score in combined:
-            final.append(combined_data[id]) 
+            c = combined_data[id]
+            c['score'] = score
+            final.append(c) 
+
 
         results_df = pd.DataFrame(final)
 
@@ -222,7 +226,7 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
         else:
             matches = results_df[price]
 
-        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url', 'rating', 'reviews']]
+        matches_filtered = matches[['make', 'model', 'year', 'starting price', 'converted car type', 'car type (epa classification)', 'color options - str', 'image', 'url', 'rating', 'reviews', 'score']]
         # .sort_values(by='starting price', key=lambda col: col, ascending=False)
         matches_filtered_json = matches_filtered.to_json(orient='records')
 

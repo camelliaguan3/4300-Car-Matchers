@@ -123,7 +123,7 @@
                 }
                 }
 
-            function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews, id) {
+            function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews, id, score) {
                 h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
 
@@ -193,6 +193,7 @@
                             <div class='result-box result-text'> 
                                 ` + h3 + years_html + specs_html + `
                                 <p class='car-reviews'>Rating: ${star_rating} (${rating} out of 5)</p>
+                                <p class='car-sim'><br><b class='spec-title'>Similarity:</b> ${score}</p>
                             </div>
                             <div class='result-box result-square'>
                                 <img class='result-img' src='${picture}' />
@@ -263,7 +264,8 @@
                                                                    url = row['url'], 
                                                                    rating = row['rating'],
                                                                    reviews = row['reviews'],
-                                                                   id = num_results);
+                                                                   id = num_results,
+                                                                   score = row['score']);
                             document.getElementById('answer-box').appendChild(temp_div);
 
                             

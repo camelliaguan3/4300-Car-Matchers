@@ -31,7 +31,7 @@ def parse_svd_data(data, reviews):
     return cars
 
 
-def decompose(cars):
+def decompose(cars, k):
     ''' Create term-document matrix and decompose.
 
     Arguments
@@ -54,19 +54,21 @@ def decompose(cars):
     word_to_index = vectorizer.vocabulary_
     index_to_word = {i:t for t,i in word_to_index.items()}
 
-    u, s, vt = svds(td_matrix, k=100)
+    u, s, vt = svds(td_matrix, k=k)
     v = vt.transpose()
 
     return vectorizer, word_to_index, index_to_word, u, s, v
 
 
 def closest_cars_to_query(query, cars, cars_compressed_normed, k):
+    ''' Finds cars that are closest to the query.    
+    '''
     sims = cars_compressed_normed.dot(query)
     asort = np.argsort(-sims)[:k+1]
     return [(cars[i][0], sims[i]) for i in asort[1:]]
 
 
-def svd_closest_cars_to_query(query, cars, vectorizer, v, u, num_results):
+def svd_closest_cars_to_query(query, cars, vectorizer, v, u, k):
     ''' Gives similarity values to cars based on svd computations.
     
     Arguments
@@ -87,10 +89,9 @@ def svd_closest_cars_to_query(query, cars, vectorizer, v, u, num_results):
     words_compressed_normed = normalize(v, axis = 1)
     cars_compressed_normed = normalize(u, axis = 1)
 
-    car_list = closest_cars_to_query(query_vec, cars, cars_compressed_normed, num_results)
+    car_list = closest_cars_to_query(query_vec, cars, cars_compressed_normed, k)
 
     return car_list
-
 
 
 def closest_words_to_query():
