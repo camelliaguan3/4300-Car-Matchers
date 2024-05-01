@@ -4,9 +4,6 @@ from sklearn.preprocessing import normalize
 from scipy.sparse.linalg import svds
 
 
-
-# How to use SVD: 
-# svd to decompose matrix of documents into singular values, gives basis + singular values
 def parse_svd_data(data, reviews):
     ''' Parse the cars data.
 
@@ -42,8 +39,7 @@ def decompose(cars, k):
     Returns
     =======
 
-    idk
-    
+    vectorizer, word_to_index, index_to_word, u, s, v
     '''
     # maybe we can change around the max_df and min_df to get better results
     vectorizer = TfidfVectorizer(stop_words = 'english', max_df = .7, min_df = 75)
@@ -62,10 +58,27 @@ def decompose(cars, k):
 
 def closest_cars_to_query(query, cars, cars_compressed_normed, k):
     ''' Finds cars that are closest to the query.    
+
+    Arguments
+    =========
+    query:
+
+    cars:
+
+    cars_compressed_normed:
+
+    k:
+
+    Returns
+    =======
+
+    car_list: list of cars that are closest to the query in (id, sim) format
     '''
     sims = cars_compressed_normed.dot(query)
     asort = np.argsort(-sims)[:k+1]
-    return [(cars[i][0], sims[i]) for i in asort[1:]]
+
+    car_list = [(cars[i][0], sims[i]) for i in asort[1:]]
+    return car_list
 
 
 def svd_closest_cars_to_query(query, cars, vectorizer, v, u, k):
@@ -94,5 +107,18 @@ def svd_closest_cars_to_query(query, cars, vectorizer, v, u, k):
     return car_list
 
 
-def closest_words_to_query():
+def find_matching_terms(query, cars):
+    ''' Finds the closest words to the query?
+    
+    Arguments
+    =========
+    query: str
+
+    cars: list of car tuples
+
+    Returns
+    =======
+
+    word_list: list of words in order of similarity
+    '''
     pass
