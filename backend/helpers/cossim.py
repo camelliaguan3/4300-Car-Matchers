@@ -44,7 +44,6 @@ def build_inverted_index_basic(cars):
         a sorted list of tuples (id, count_of_term_in_car)
         such that tuples with smaller ids appear first:
         inverted_index[term] = [(d1, tf1), (d2, tf2), ...]
-
     '''
     inverted = {}
 
@@ -60,7 +59,6 @@ def build_inverted_index_basic(cars):
     return inverted
 
 
-# UPDATE TO INCLUDE OTHER SPECS
 def build_inverted_index_final(cars):
     ''' Builds an inverted index from the messages.
 
@@ -77,7 +75,6 @@ def build_inverted_index_final(cars):
         a sorted list of tuples (id, count_of_term_in_car)
         such that tuples with smaller ids appear first:
         inverted_index[term] = [(d1, tf1), (d2, tf2), ...]
-
     '''
     inverted = {}
 

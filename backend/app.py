@@ -19,6 +19,8 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 json_file_path = os.path.join(current_directory, 'init.json')
 
 
+
+# Helper functions for processing json
 def split_lower_words(sentence, splitter):
     ''' Splits and lowers words in a sentence.
     
@@ -111,6 +113,7 @@ def process_reviews_and_cars(cars_data, reviews_data):
     return combined
 
 
+
 # Assuming your JSON data is stored in a file named 'init.json'
 with open(json_file_path, 'r') as file:
     data = json.load(file)
@@ -126,6 +129,7 @@ with open(json_file_path, 'r') as file:
 
 app = Flask(__name__)
 CORS(app)
+
 
 
 # cosine similarity attempt with final data
@@ -181,6 +185,8 @@ def cos_search(q, min_p, max_p, no_lim, num_results):
     return matches_filtered_json
 
 
+
+# svd combined with cosine similarity
 def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
     # handle case where the final list of cars is empty (False if empty)
     valid = True

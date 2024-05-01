@@ -88,6 +88,7 @@
 
 
         <script>
+            // Helpers for the answer box
             function calculateStarRating(rating) {
                 const fullStar = '&#9733;';
                 const emptyStar = '&#9734;';
@@ -123,6 +124,8 @@
                 }
                 }
 
+            
+            // computes HTML for display
             function answerBoxTemplate(make, model, years, price, specs, color, picture, urls, rating, reviews, id, score) {
                 h3 = `<h3 class='car-make-model'>${make} ${model}</h3>
                 `
@@ -206,6 +209,7 @@
             }
 
 
+            // gets values from page and grabs results
             function filterText() {
                 document.getElementById('answer-box').innerHTML = '';
 
@@ -291,23 +295,6 @@
                     
                 }
             }
-
-
-            /**
-            function filterText(){
-                document.getElementById('answer-box').innerHTML = ''
-                console.log(document.getElementById('filter-text-val').value)
-                fetch('/episodes?' + new URLSearchParams({ title: document.getElementById('filter-text-val').value }).toString())
-                .then((response) => response.json())
-                .then((data) => data.forEach(row => {
-                    
-                    let temp_div = document.createElement('div')
-                    temp_div.innerHTML = answerBoxTemplate(row.title,row.descr,row.imdb_rating)
-                    document.getElementById('answer-box').appendChild(temp_div)
-                }));
-
-            }
-            **/
 
         </script>
     </div>
