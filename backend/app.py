@@ -246,7 +246,8 @@ def combine_svd_w_cos_search(q, min_p, max_p, no_lim, num_results):
         for id, score in combined:
             c = combined_data[id]
             c['score'] = score
-            final.append(c) 
+            if score > 0:
+                final.append(c) 
 
 
         # find common words to query
